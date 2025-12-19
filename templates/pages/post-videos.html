@@ -1,0 +1,380 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+
+<main>
+
+  <!-- Container START -->
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Sidenav START -->
+      <div class="col-lg-3">
+
+        <!-- Advanced filter responsive toggler START -->
+        <div class="d-flex align-items-center d-lg-none">
+          <button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasSideNavbar" aria-controls="offcanvasSideNavbar">
+            <span class="btn btn-primary"><i class="fa-solid fa-sliders-h"></i></span>
+            <span class="h6 mb-0 fw-bold d-lg-none ms-2">My profile</span>
+          </button>
+        </div>
+        <!-- Advanced filter responsive toggler END -->
+
+        <!-- Navbar START-->
+        {% include 'partials/sidenav.html' %}
+        <!-- Navbar END-->
+      </div>
+      <!-- Sidenav END -->
+
+      <!-- Main content START -->
+      <div class="col-md-8 col-lg-6 vstack gap-4">
+        <!-- Card START -->
+        <div class="card">
+          <!-- Card header START -->
+          <div class="card-header d-sm-flex align-items-center justify-content-between border-0 pb-0">
+            <h1 class="h4 card-title">Videos</h1>
+            <!-- Button modal -->
+            <a class="btn btn-primary-soft" href="#" data-bs-toggle="modal" data-bs-target="#modalCreateVideo"> <i
+                class="fa-solid fa-plus pe-1"></i> Add video</a>
+          </div>
+          <!-- Card header START -->
+          <!-- Card body START -->
+          <div class="card-body">
+
+            <!-- Tab nav line -->
+            <ul class="nav nav-tabs nav-bottom-line">
+              <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#tab-1"> Home </a> </li>
+              <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-2"> Live </a> </li>
+              <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-3"> Show </a> </li>
+              <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-4"> Saved video </a> </li>
+            </ul>
+            <div class="tab-content mb-0 pb-0">
+              <!-- Home tab START -->
+              <div class="tab-pane fade show active" id="tab-1">
+                <div class="row g-3">
+                  <div class="col-sm-6 col-lg-4">
+                    <!-- Video START -->
+                    <div class="card p-0 shadow-none border-0 position-relative">
+                      <!-- Video image -->
+                      <div class="position-relative">
+                        <img class="rounded" src="{% static '/images/post/16by9/large/11.jpg' %}" alt="">
+                        <!-- Play icon -->
+                        <div class="position-absolute top-0 end-0 p-3">
+                          <a class="icon-md bg-danger text-white rounded-circle" href="#"> <i
+                              class="bi bi-play-fill fs-5"> </i> </a>
+                        </div>
+                        <!-- Duration -->
+                        <div class="position-absolute bottom-0 start-0 p-3 d-flex w-100">
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small">10:20</span>
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small ms-auto">1 min ago</span>
+                        </div>
+                      </div>
+                      <!-- Video info -->
+                      <div class="card-body px-0">
+                        <div class="d-flex align-items-center mb-3">
+                          <!-- Avatar -->
+                          <div class="avatar avatar-xxs me-2">
+                            <img class="avatar-img rounded-circle" src="{% static '/images/avatar/01.jpg' %}" alt="">
+                          </div>
+                          <!-- Avatar name -->
+                          <h6 class="mb-0"> <a href="#!"> Frances Guerrero </a> </h6>
+                          <span class="ms-auto small"> 156.9K views</span>
+                        </div>
+                        <!-- Video title  -->
+                        <h6 class="mb-0"> <a class="stretched-link"
+                            href="{% url 'pages:dynamic_pages' template_name='post-video-details' %}"> New movie
+                            trailers
+                            (2021 - 2022) September </a> </h6>
+                      </div>
+                    </div>
+                    <!-- Video END -->
+                  </div>
+                  <div class="col-sm-6 col-lg-4">
+                    <!-- Video START -->
+                    <div class="card p-0 shadow-none border-0 position-relative">
+                      <!-- Video image -->
+                      <div class="position-relative">
+                        <img class="rounded" src="{% static '/images/post/16by9/large/12.jpg' %}" alt="">
+                        <!-- Play icon -->
+                        <div class="position-absolute top-0 end-0 p-3">
+                          <a class="icon-md bg-danger text-white rounded-circle" href="#"> <i
+                              class="bi bi-play-fill fs-5"> </i> </a>
+                        </div>
+                        <!-- Duration -->
+                        <div class="position-absolute bottom-0 start-0 p-3 d-flex w-100">
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small">05:10</span>
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small ms-auto">25 min ago</span>
+                        </div>
+                      </div>
+                      <!-- Video info -->
+                      <div class="card-body px-0">
+                        <div class="d-flex align-items-center mb-3">
+                          <!-- Avatar -->
+                          <div class="avatar avatar-xxs me-2">
+                            <img class="avatar-img rounded-circle" src="{% static '/images/avatar/02.jpg' %}" alt="">
+                          </div>
+                          <!-- Avatar name -->
+                          <h6 class="mb-0"> <a href="#!"> Lori Ferguson <i
+                                class="bi bi-patch-check-fill text-success small"></i> </a> </h6>
+                          <span class="ms-auto small"> 156.9K views</span>
+                        </div>
+                        <!-- Video title  -->
+                        <h6 class="mb-0"> <a class="stretched-link"
+                            href="{% url 'pages:dynamic_pages' template_name='post-video-details' %}"> Learn web
+                            development as an absolute beginner </a> </h6>
+                      </div>
+                    </div>
+                    <!-- Video END -->
+                  </div>
+                  <div class="col-sm-6 col-lg-4">
+                    <!-- Video START -->
+                    <div class="card p-0 shadow-none border-0 position-relative">
+                      <!-- Video image -->
+                      <div class="position-relative">
+                        <img class="rounded" src="{% static '/images/post/16by9/large/13.jpg' %}" alt="">
+                        <!-- Play icon -->
+                        <div class="position-absolute top-0 end-0 p-3">
+                          <a class="icon-md bg-danger text-white rounded-circle" href="#"> <i
+                              class="bi bi-play-fill fs-5"> </i> </a>
+                        </div>
+                        <!-- Duration -->
+                        <div class="position-absolute bottom-0 start-0 p-3 d-flex w-100">
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small">03:40</span>
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small ms-auto">50 min ago</span>
+                        </div>
+                      </div>
+                      <!-- Video info -->
+                      <div class="card-body px-0">
+                        <div class="d-flex align-items-center mb-3">
+                          <!-- Avatar -->
+                          <div class="avatar avatar-xxs me-2">
+                            <img class="avatar-img rounded-circle" src="{% static '/images/avatar/03.jpg' %}" alt="">
+                          </div>
+                          <!-- Avatar name -->
+                          <h6 class="mb-0"> <a href="#!"> Louis Crawford </a> </h6>
+                          <span class="ms-auto small"> 156.9K views</span>
+                        </div>
+                        <!-- Video title  -->
+                        <h6 class="mb-0"> <a class="stretched-link"
+                            href="{% url 'pages:dynamic_pages' template_name='post-video-details' %}"> Python tutorial -
+                            Python for beginners [full course] </a> </h6>
+                      </div>
+                    </div>
+                    <!-- Video END -->
+                  </div>
+                  <div class="col-sm-6 col-lg-4">
+                    <!-- Video START -->
+                    <div class="card p-0 shadow-none border-0 position-relative">
+                      <!-- Video image -->
+                      <div class="position-relative">
+                        <img class="rounded" src="{% static '/images/post/16by9/large/14.jpg' %}" alt="">
+                        <!-- Play icon -->
+                        <div class="position-absolute top-0 end-0 p-3">
+                          <a class="icon-md bg-danger text-white rounded-circle" href="#"> <i
+                              class="bi bi-play-fill fs-5"> </i> </a>
+                        </div>
+                        <!-- Duration -->
+                        <div class="position-absolute bottom-0 start-0 p-3 d-flex w-100">
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small">06:12</span>
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small ms-auto">1 week ago</span>
+                        </div>
+                      </div>
+                      <!-- Video info -->
+                      <div class="card-body px-0">
+                        <div class="d-flex align-items-center mb-3">
+                          <!-- Avatar -->
+                          <div class="avatar avatar-xxs me-2">
+                            <img class="avatar-img rounded-circle" src="{% static '/images/avatar/04.jpg' %}" alt="">
+                          </div>
+                          <!-- Avatar name -->
+                          <h6 class="mb-0"> <a href="#!"> Larry Lawson </a> </h6>
+                          <span class="ms-auto small"> 156.9K views</span>
+                        </div>
+                        <!-- Video title  -->
+                        <h6 class="mb-0"> <a class="stretched-link"
+                            href="{% url 'pages:dynamic_pages' template_name='post-video-details' %}"> One of the
+                            greatest speeches ever | Steve Jobs </a> </h6>
+                      </div>
+                    </div>
+                    <!-- Video END -->
+                  </div>
+                  <div class="col-sm-6 col-lg-4">
+                    <!-- Video START -->
+                    <div class="card p-0 shadow-none border-0 position-relative">
+                      <!-- Video image -->
+                      <div class="position-relative">
+                        <img class="rounded" src="{% static '/images/post/16by9/large/15.jpg' %}" alt="">
+                        <!-- Play icon -->
+                        <div class="position-absolute top-0 end-0 p-3">
+                          <a class="icon-md bg-danger text-white rounded-circle" href="#"> <i
+                              class="bi bi-play-fill fs-5"> </i> </a>
+                        </div>
+                        <!-- Duration -->
+                        <div class="position-absolute bottom-0 start-0 p-3 d-flex w-100">
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small">03:45</span>
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small ms-auto">2 week ago</span>
+                        </div>
+                      </div>
+                      <!-- Video info -->
+                      <div class="card-body px-0">
+                        <div class="d-flex align-items-center mb-3">
+                          <!-- Avatar -->
+                          <div class="avatar avatar-xxs me-2">
+                            <img class="avatar-img rounded-circle" src="{% static '/images/avatar/05.jpg' %}" alt="">
+                          </div>
+                          <!-- Avatar name -->
+                          <h6 class="mb-0"> <a href="#!"> Joan Wallace </a> </h6>
+                          <span class="ms-auto small"> 156.9K views</span>
+                        </div>
+                        <!-- Video title  -->
+                        <h6 class="mb-0"> <a class="stretched-link"
+                            href="{% url 'pages:dynamic_pages' template_name='post-video-details' %}"> A trading
+                            platform
+                            - an easy start in trading </a> </h6>
+                      </div>
+                    </div>
+                    <!-- Video END -->
+                  </div>
+                </div>
+              </div>
+              <!-- Home tab END -->
+
+              <!-- Live tab START -->
+              <div class="tab-pane fade" id="tab-2">
+                <div class="row g-3">
+                  <div class="col-sm-6 col-lg-4">
+                    <!-- Video START -->
+                    <div class="card p-0 shadow-none border-0 position-relative">
+                      <!-- Video image -->
+                      <div class="position-relative">
+                        <img class="rounded" src="{% static '/images/post/16by9/large/14.jpg' %}" alt="">
+                        <!-- Play icon -->
+                        <div class="position-absolute top-0 end-0 p-3">
+                          <a class="icon-md bg-danger text-white rounded-circle" href="#"> <i
+                              class="bi bi-play-fill fs-5"> </i> </a>
+                        </div>
+                        <!-- Duration -->
+                        <div class="position-absolute bottom-0 start-0 p-3 d-flex w-100">
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small">10:20</span>
+                          <span class="bg-dark bg-opacity-50 px-2 rounded text-white small ms-auto">1 min ago</span>
+                        </div>
+                      </div>
+                      <!-- Video info -->
+                      <div class="card-body px-0">
+                        <div class="d-flex align-items-center mb-3">
+                          <!-- Avatar -->
+                          <div class="avatar avatar-xxs me-2">
+                            <img class="avatar-img rounded-circle" src="{% static '/images/avatar/01.jpg' %}" alt="">
+                          </div>
+                          <!-- Avatar name -->
+                          <h6 class="mb-0"> <a href="#!"> Frances Guerrero <i
+                                class="bi bi-patch-check-fill text-success small"></i> </a> </h6>
+                          <span class="ms-auto small"> 156.9K views</span>
+                        </div>
+                        <!-- Video title  -->
+                        <h6 class="mb-0"> <a class="stretched-link"
+                            href="{% url 'pages:dynamic_pages' template_name='post-video-details' %}"> 8 shocking
+                            bitcoin
+                            crypto predictions for 2022 </a> </h6>
+                      </div>
+                    </div>
+                    <!-- Video END -->
+                  </div>
+                </div>
+              </div>
+              <!-- Live tab END -->
+
+              <!-- Show tab START -->
+              <div class="tab-pane fade" id="tab-3">
+                <!-- Add Video -->
+                <div class="my-sm-5 py-sm-5 text-center">
+                  <i class="display-1 text-body-secondary bi bi-camera-reels"> </i>
+                  <h4 class="mt-2 mb-3 text-body">No video founds</h4>
+                  <button class="btn btn-primary-soft btn-sm" data-bs-toggle="modal" data-bs-target="#modalCreateVideo">
+                    Click here to add </button>
+                </div>
+              </div>
+              <!-- Show tab END -->
+
+              <!-- Saved video START -->
+              <div class="tab-pane fade" id="tab-4">
+                <!-- Add Video -->
+                <div class="my-sm-5 py-sm-5 text-center">
+                  <i class="display-1 text-body-secondary bi bi-camera-reels"> </i>
+                  <h4 class="mt-2 mb-3 text-body">No video founds</h4>
+                  <button class="btn btn-primary-soft btn-sm" data-bs-toggle="modal" data-bs-target="#modalCreateVideo">
+                    Click here to add </button>
+                </div>
+              </div>
+              <!-- Saved video END -->
+
+            </div>
+          </div>
+          <!-- Card body END -->
+        </div>
+        <!-- Card END -->
+      </div>
+      <!-- Main content END -->
+
+    </div> <!-- Row END -->
+  </div>
+  <!-- Container END -->
+
+</main>
+
+<!-- Modal add video START -->
+<div class="modal fade" id="modalCreateVideo" tabindex="-1" aria-labelledby="modalLabelCreateVideo" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Title -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabelCreateVideo">Create video</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form START -->
+        <form>
+          <!-- Title -->
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" placeholder="Add title here">
+          </div>
+          <!-- Description -->
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" rows="3" placeholder="Add description here"></textarea>
+          </div>
+          <!-- Dropzone photo START -->
+          <div class="mb-3">
+            <label class="form-label">Upload videos</label>
+            <div class="dropzone dropzone-default card shadow-none" data-dropzone='{"maxFiles":2}'>
+              <div class="dz-message">
+                <i class="bi bi-camera-reels display-3"></i>
+                <p>Drag here or click to upload video.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Dropzone photo END -->
+        </form>
+        <!-- Form END -->
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success-soft">Post video</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block extra_javascript %}
+{% endblock extra_javascript %}

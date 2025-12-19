@@ -1,0 +1,590 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+  <!-- Container START -->
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Sidenav START -->
+      <div class="col-lg-3">
+
+        <!-- Advanced filter responsive toggler START -->
+        <div class="d-flex align-items-center d-lg-none">
+          <button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasSideNavbar" aria-controls="offcanvasSideNavbar">
+            <span class="btn btn-primary"><i class="fa-solid fa-sliders-h"></i></span>
+            <span class="h6 mb-0 fw-bold d-lg-none ms-2">My profile</span>
+          </button>
+        </div>
+        <!-- Advanced filter responsive toggler END -->
+
+        <!-- Navbar START-->
+        {% include 'partials/sidenav.html' %}
+        <!-- Navbar END-->
+      </div>
+      <!-- Sidenav END -->
+
+      <!-- Main content START -->
+      <div class="col-md-8 col-lg-6 vstack gap-4">
+
+        <!-- Card START -->
+        <div class="card">
+          <!-- Card header START -->
+          <div class="card-header border-0 pb-0">
+            <h1 class="h4 card-title">Celebration</h1>
+          </div>
+          <!-- Card header START -->
+          <!-- Card body START -->
+          <div class="card-body">
+            <!-- Birthdays START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-lg status-online me-2">
+                <a href="#!"><img class="avatar-img rounded-circle" src="{% static '/images/avatar/03.jpg' %}"
+                    alt=""></a>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <h6><a href="#!">Lori Ferguson </a></h6>
+                  <p class="small ms-sm-2 mb-0 mb-sm-2">Today is her birthday</p>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <div class="position-relative w-100">
+                  <textarea class="form-control pe-4" rows="1" placeholder="Happy birthday dear.."></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- Birthdays END -->
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Birthdays START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-lg me-2">
+                <div class="avatar-img rounded-circle bg-danger bg-opacity-10 text-danger"><span
+                    class="position-absolute top-50 start-50 translate-middle fw-bold">BV</span></div>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <h6 class="mb-0"><a href="#!">Billy Vasquez </a></h6>
+                  <p class="small ms-sm-2 mb-0 mb-sm-2">Today is her birthday</p>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit2" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit2">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <div class="position-relative w-100">
+                  <textarea class="form-control pe-4" rows="1" placeholder="Birthday wish here.."></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- Birthdays END -->
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Congratulate START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-story avatar-lg me-2">
+                <a href="#!"><img class="avatar-img rounded-circle" src="{% static '/images/avatar/05.jpg' %}"
+                    alt=""></a>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <p class="mb-0 mb-sm-2">Congratulate <a class="h6" href="#!">Amanda Reed </a> for 3 years at <a
+                      class="h6" href="#">Bootstrap - Front-end framework</a> </p>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit3" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit3">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <div class="position-relative w-100">
+                  <textarea class="form-control pe-4" rows="1" placeholder="Congratulate"></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- Congratulate END -->
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Congratulate START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-lg me-2">
+                <a href="#!"><img class="avatar-img rounded-circle" src="{% static '/images/avatar/06.jpg' %}"
+                    alt=""></a>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <p>Judy Nguyen and 3 other connections are attending <strong> WordCamps San Francisco.</strong></p>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit4" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit4">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <a href="{% url 'pages:dynamic_pages' template_name='event-details' %}"
+                  class="btn btn-sm btn-primary-soft">View event </a>
+              </div>
+            </div>
+            <!-- Congratulate END -->
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Birthdays START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-lg me-2">
+                <a href="#!"><img class="avatar-img rounded-circle" src="{% static '/images/avatar/07.jpg' %}"
+                    alt=""></a>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <h6 class="mb-0"><a href="#!">Samuel Bishop </a></h6>
+                  <p class="small ms-sm-2 mb-0 mb-sm-2">Birthday is in 2 january</p>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit5" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit5">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <div class="position-relative w-100">
+                  <textarea class="form-control pe-4" rows="1" placeholder="Birthday wish here.."></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- Birthdays END -->
+          </div>
+          <!-- Card body END -->
+        </div>
+        <!-- Card END -->
+
+        <!-- Card START -->
+        <div class="card">
+          <!-- Card header START -->
+          <div class="card-header border-0 pb-0">
+            <h5 class="card-title">Upcoming Celebration</h5>
+          </div>
+          <!-- Card header START -->
+          <!-- Card body START -->
+          <div class="card-body">
+            <!-- Birthdays START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-lg status-online me-2">
+                <a href="#!"><img class="avatar-img rounded-circle" src="{% static '/images/avatar/10.jpg' %}"
+                    alt=""></a>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <h6><a href="#!">Jacqueline Miller </a></h6>
+                  <p class="small ms-sm-2 mb-0 mb-sm-2">Birthday is in 10 march</p>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit6" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit6">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <div class="position-relative w-100">
+                  <textarea class="form-control pe-4" rows="1" placeholder="Happy birthday dear.."></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- Birthdays END -->
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Birthdays START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-lg me-2">
+                <div class="avatar-img rounded-circle bg-success bg-opacity-10 text-success"><span
+                    class="position-absolute top-50 start-50 translate-middle fw-bold text-center lh-1">22 <br> Feb
+                  </span></div>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <div>
+                    <a class="h6" href="#!">International Conference on Cyber Law, Cybercrime & Cyber Security</a>
+                    <p class="d-block small"> <i class="bi bi-geo-alt-fill"></i> 19 School Lane, London, United Kingdom
+                    </p>
+                  </div>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit7" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit7">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <a href="{% url 'pages:dynamic_pages' template_name='event-details' %}"
+                  class="btn btn-sm btn-primary-soft">Join now </a>
+              </div>
+            </div>
+            <!-- Birthdays END -->
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Congratulate START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-lg me-2">
+                <a href="#!"><img class="avatar-img rounded-circle" src="{% static '/images/avatar/09.jpg' %}"
+                    alt=""></a>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <p class="mb-0 mb-sm-2">Congratulate <a class="h6" href="#!">Amanda Reed </a> for 3 years at <a
+                      class="h6" href="#">Bootstrap - Front-end framework</a> </p>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit8" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit8">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <div class="position-relative w-100">
+                  <textarea class="form-control pe-4" rows="1" placeholder="Congratulate"></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- Congratulate END -->
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Congratulate START -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-story avatar-lg me-2">
+                <a href="#!"><img class="avatar-img rounded-circle" src="{% static '/images/avatar/11.jpg' %}"
+                    alt=""></a>
+              </div>
+              <!-- Info -->
+              <div class="ms-2 w-100">
+                <div class="d-sm-flex justify-content-between">
+                  <p>Joan Wallace and 5 other connections are attending <strong> WordCamps New York.</strong></p>
+                  <!-- Dropdown START -->
+                  <div class="dropdown ms-auto">
+                    <a href="#" class="text-secondary" id="bdayActionEdit9" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bdayActionEdit9">
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-1"></i> Delete</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell fa-fw pe-1"></i> Turn off notification
+                        </a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="bi bi-bell-slash fa-fw pe-1"></i> Mute Amanda
+                          Read </a></li>
+                    </ul>
+                  </div>
+                  <!-- Dropdown END -->
+                </div>
+                <a href="{% url 'pages:dynamic_pages' template_name='event-details' %}"
+                  class="btn btn-sm btn-primary-soft">View event </a>
+              </div>
+            </div>
+            <!-- Congratulate END -->
+
+          </div>
+          <!-- Card body END -->
+        </div>
+        <!-- Card END -->
+      </div>
+
+      <!-- Right sidebar START -->
+      <div class="col-lg-3">
+        <div class="row g-4">
+          <!-- Card follow START -->
+          <div class="col-sm-6 col-lg-12">
+            <div class="card">
+              <!-- Card header START -->
+              <div class="card-header pb-0 border-0">
+                <h5 class="card-title mb-0">Who to follow</h5>
+              </div>
+              <!-- Card header END -->
+              <!-- Card body START -->
+              <div class="card-body">
+                <!-- Connection item START -->
+                <div class="hstack gap-2 mb-3">
+                  <!-- Avatar -->
+                  <div class="avatar">
+                    <a href="#!"><img class="avatar-img rounded-circle" src="{% static '/images/avatar/04.jpg' %}"
+                        alt=""></a>
+                  </div>
+                  <!-- Title -->
+                  <div class="overflow-hidden">
+                    <a class="h6 mb-0" href="#!">Judy Nguyen </a>
+                    <p class="mb-0 small text-truncate">News anchor</p>
+                  </div>
+                  <!-- Button -->
+                  <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i class="fa-solid fa-plus">
+                    </i></a>
+                </div>
+                <!-- Connection item END -->
+
+                <!-- Connection item START -->
+                <div class="hstack gap-2 mb-3">
+                  <!-- Avatar -->
+                  <div class="avatar avatar-story">
+                    <a href="#!"> <img class="avatar-img rounded-circle" src="{% static '/images/avatar/05.jpg' %}"
+                        alt=""> </a>
+                  </div>
+                  <!-- Title -->
+                  <div class="overflow-hidden">
+                    <a class="h6 mb-0" href="#!">Amanda Reed </a>
+                    <p class="mb-0 small text-truncate">Web Developer</p>
+                  </div>
+                  <!-- Button -->
+                  <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i class="fa-solid fa-plus">
+                    </i></a>
+                </div>
+                <!-- Connection item END -->
+
+                <!-- Connection item START -->
+                <div class="hstack gap-2 mb-3">
+                  <!-- Avatar -->
+                  <div class="avatar">
+                    <a href="#"> <img class="avatar-img rounded-circle" src="{% static '/images/avatar/11.jpg' %}"
+                        alt=""> </a>
+                  </div>
+                  <!-- Title -->
+                  <div class="overflow-hidden">
+                    <a class="h6 mb-0" href="#!">Billy Vasquez </a>
+                    <p class="mb-0 small text-truncate">News anchor</p>
+                  </div>
+                  <!-- Button -->
+                  <a class="btn btn-primary rounded-circle icon-md ms-auto" href="#"><i class="bi bi-person-check-fill">
+                    </i></a>
+                </div>
+                <!-- Connection item END -->
+
+                <!-- Connection item START -->
+                <div class="hstack gap-2 mb-3">
+                  <!-- Avatar -->
+                  <div class="avatar">
+                    <a href="#"> <img class="avatar-img rounded-circle" src="{% static '/images/avatar/01.jpg' %}"
+                        alt=""> </a>
+                  </div>
+                  <!-- Title -->
+                  <div class="overflow-hidden">
+                    <a class="h6 mb-0" href="#!">Lori Ferguson </a>
+                    <p class="mb-0 small text-truncate">Web Developer at StackBros</p>
+                  </div>
+                  <!-- Button -->
+                  <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i class="fa-solid fa-plus">
+                    </i></a>
+                </div>
+                <!-- Connection item END -->
+
+                <!-- Connection item START -->
+                <div class="hstack gap-2 mb-3">
+                  <!-- Avatar -->
+                  <div class="avatar">
+                    <a href="#"> <img class="avatar-img rounded-circle"
+                        src="{% static '/images/avatar/placeholder.jpg' %}" alt=""> </a>
+                  </div>
+                  <!-- Title -->
+                  <div class="overflow-hidden">
+                    <a class="h6 mb-0" href="#!">Carolyn Ortiz </a>
+                    <p class="mb-0 small text-truncate">News anchor</p>
+                  </div>
+                  <!-- Button -->
+                  <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i class="fa-solid fa-plus">
+                    </i></a>
+                </div>
+                <!-- Connection item END -->
+
+                <!-- View more button -->
+                <div class="d-grid mt-3">
+                  <a class="btn btn-sm btn-primary-soft" href="#!">View more</a>
+                </div>
+              </div>
+              <!-- Card body END -->
+            </div>
+          </div>
+          <!-- Card follow START -->
+
+          <!-- Card News START -->
+          <div class="col-sm-6 col-lg-12">
+            <div class="card">
+              <!-- Card header START -->
+              <div class="card-header pb-0 border-0">
+                <h5 class="card-title mb-0">Today’s news</h5>
+              </div>
+              <!-- Card header END -->
+              <!-- Card body START -->
+              <div class="card-body">
+                <!-- News item -->
+                <div class="mb-3">
+                  <h6 class="mb-0"><a href="{% url 'pages:dynamic_pages' template_name='blog-details' %}">Ten questions
+                      you should answer truthfully</a></h6>
+                  <small>2hr</small>
+                </div>
+                <!-- News item -->
+                <div class="mb-3">
+                  <h6 class="mb-0"><a href="{% url 'pages:dynamic_pages' template_name='blog-details' %}">Five
+                      unbelievable facts about money</a></h6>
+                  <small>3hr</small>
+                </div>
+                <!-- News item -->
+                <div class="mb-3">
+                  <h6 class="mb-0"><a href="{% url 'pages:dynamic_pages' template_name='blog-details' %}">Best Pinterest
+                      Boards for learning about business</a>
+                  </h6>
+                  <small>4hr</small>
+                </div>
+                <!-- News item -->
+                <div class="mb-3">
+                  <h6 class="mb-0"><a href="{% url 'pages:dynamic_pages' template_name='blog-details' %}">Skills that
+                      you can learn from business</a></h6>
+                  <small>6hr</small>
+                </div>
+                <!-- Load more comments -->
+                <a href="#!" role="button"
+                  class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"
+                  data-bs-toggle="button" aria-pressed="true">
+                  <div class="spinner-dots me-2">
+                    <span class="spinner-dot"></span>
+                    <span class="spinner-dot"></span>
+                    <span class="spinner-dot"></span>
+                  </div>
+                  View all latest news
+                </a>
+              </div>
+              <!-- Card body END -->
+            </div>
+          </div>
+          <!-- Card News END -->
+        </div>
+      </div>
+      <!-- Right sidebar END -->
+
+    </div> <!-- Row END -->
+  </div>
+  <!-- Container END -->
+
+</main>
+
+{% endblock content %}
+
+{% block extra_javascript %}
+{% endblock extra_javascript %}
