@@ -49,11 +49,12 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.mfa",
     "allauth.socialaccount",
-    "fontawesomefree"
+    "fontawesomefree",
+    "invitations",
 ]
 
 LOCAL_APPS = [
-
+    "users",
     # Your stuff: custom apps go here
 ]
 
