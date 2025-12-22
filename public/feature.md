@@ -1,3 +1,24 @@
+Tasks:
+1. Invitation
+	- [x] Invite user from backend for mentor/user
+	- [x] User accept invitation and profile will be created
+	- [x] User will be redirected to profile page
+2. User:
+	- [x] Update profile
+	- [ ] Search mentor
+	- [ ] Ask for connect
+
+3. Group:
+	- [ ] Create group from backend
+	- [ ] Assign moderator to group
+	- [ ] User can find group
+	- [ ] Send invitation to join group
+	- [ ] Moderator can approve user
+	- [ ] User can chat with group
+	- [ ] User can like, unlike, comment, chat
+	- [ ] User can upload image, video
+
+------------
 MM:
 	linked in group discussion
 		invitation only with unique code

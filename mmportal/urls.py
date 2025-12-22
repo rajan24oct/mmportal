@@ -21,11 +21,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from users.views import ProfileAboutUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("invitations/", include('invitations.urls', namespace='invitations')),
     path('accounts/', include('allauth.urls')),
+    path('', include('users.urls', namespace='users')),
     path("", include("pages.urls", namespace="pages")),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

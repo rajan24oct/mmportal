@@ -44,7 +44,7 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> October 20, 1990 </strong>
+            <i class="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> {{ user.profile.dob|default:"N/A" }} </strong>
           </p>
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
@@ -54,9 +54,9 @@
             </a>
             <!-- Card share action dropdown menu -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction2">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
               </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
             </ul>
           </div>
         </div>
@@ -67,7 +67,8 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-heart fa-fw me-2"></i> Status: <strong> Single </strong>
+            <i class="bi bi-heart fa-fw me-2"></i> Status:
+              <strong> {{ user.profile.get_marital_status_display|default:"N/A" }} </strong>
           </p>
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
@@ -77,9 +78,9 @@
             </a>
             <!-- Card share action dropdown menu -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction3">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
               </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
             </ul>
           </div>
         </div>
@@ -90,7 +91,7 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-briefcase fa-fw me-2"></i> <strong> Lead Developer </strong>
+            <i class="bi bi-briefcase fa-fw me-2"></i> <strong> {{ user.profile.job_title|default:"N/A" }} </strong>
           </p>
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
@@ -100,9 +101,9 @@
             </a>
             <!-- Card share action dropdown menu -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction4">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
               </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
             </ul>
           </div>
         </div>
@@ -113,7 +114,8 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-geo-alt fa-fw me-2"></i> Lives in: <strong> New Hampshire </strong>
+            <i class="bi bi-geo-alt fa-fw me-2"></i> Lives in: <strong> {{ user.profile.location|default:"N/A" }}
+            </strong>
           </p>
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
@@ -123,9 +125,9 @@
             </a>
             <!-- Card share action dropdown menu -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction5">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
               </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
             </ul>
           </div>
         </div>
@@ -136,7 +138,7 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-geo-alt fa-fw me-2"></i> Joined on: <strong> Nov 26, 2019 </strong>
+            <i class="bi bi-geo-alt fa-fw me-2"></i> Joined on: <strong> {{ user.date_joined|date:"M d, Y" }} </strong>
           </p>
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
@@ -144,12 +146,6 @@
               aria-expanded="false">
               <i class="bi bi-three-dots"></i>
             </a>
-            <!-- Card share action dropdown menu -->
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction6">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
-              </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-            </ul>
           </div>
         </div>
         <!-- Joined on END -->
@@ -159,7 +155,7 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-envelope fa-fw me-2"></i> Email: <strong> example@xyz.com </strong>
+            <i class="bi bi-envelope fa-fw me-2"></i> Email: <strong> {{ user.email }} </strong>
           </p>
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
@@ -167,27 +163,49 @@
               aria-expanded="false">
               <i class="bi bi-three-dots"></i>
             </a>
-            <!-- Card share action dropdown menu -->
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction7">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
-              </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-            </ul>
           </div>
         </div>
         <!-- Joined on END -->
       </div>
-      <div class="col-sm-6 position-relative">
+      <div class="col-sm-6">
         <!-- Workplace on START -->
-        <a class="btn btn-dashed rounded w-100" href="#!"> <i class="bi bi-plus-circle-dotted me-1"></i>Add a
-          workplace</a>
-        <!-- Workplace on END -->
+        <div class="d-flex align-items-center rounded border px-3 py-2">
+          <p class="mb-0">
+            <i class="bi bi-building fa-fw me-2"></i> Workplace: <strong> {{ user.profile.work_place|default:"N/A" }}
+            </strong>
+          </p>
+          <div class="dropdown ms-auto">
+            <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction8" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-three-dots"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction8">
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="col-sm-6 position-relative">
+      <div class="col-sm-6">
         <!-- Education on START -->
-        <a class="btn btn-dashed rounded w-100" href="#!"> <i class="bi bi-plus-circle-dotted me-1"></i>Add a
-          education</a>
-        <!-- Education on END -->
+        <div class="d-flex align-items-center rounded border px-3 py-2">
+          <p class="mb-0">
+            <i class="bi bi-book fa-fw me-2"></i> Education:
+              <strong> {{ user.profile.education_qualification|default:"N/A" }} </strong>
+          </p>
+          <div class="dropdown ms-auto">
+            <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction9" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-three-dots"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction9">
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

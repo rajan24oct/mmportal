@@ -139,16 +139,16 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 STATIC_ROOT = location('public/static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = location('public/media')
-
-EMAIL_HOST = 'smtp.postmarkapp.com'
-EMAIL_PORT = '25'
-EMAIL_HOST_USER = '4934d6c9-26c1-4dcf-8b81-e811c1f401ed'
-EMAIL_HOST_PASSWORD = '4934d6c9-4dcf-8b81-e811c1f401ed'
-EMAIL_USE_TLS = True
-
-ANYMAIL = {
-    "POSTMARK_SERVER_TOKEN": "4934d6c9-26c1-4dcf-8b81-e811c1f401ed",
-}
+#
+# EMAIL_HOST = 'smtp.postmarkapp.com'
+# EMAIL_PORT = '25'
+# EMAIL_HOST_USER = '4934d6c9-26c1-4dcf-8b81-e811c1f401ed'
+# EMAIL_HOST_PASSWORD = '4934d6c9-4dcf-8b81-e811c1f401ed'
+# EMAIL_USE_TLS = True
+#
+# ANYMAIL = {
+#     "POSTMARK_SERVER_TOKEN": "4934d6c9-26c1-4dcf-8b81-e811c1f401ed",
+# }
 
 INVITATION_ONLY = False
 try:

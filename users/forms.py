@@ -1,4 +1,6 @@
 from allauth.account.forms import SignupForm
+from django import forms
+from .models import UserProfile
 
 class UserSignupForm(SignupForm):
     def __init__(self, *args, **kwargs):
@@ -15,3 +17,14 @@ class UserSignupForm(SignupForm):
         # ACCOUNT_AUTHENTICATION_METHOD="email" and ACCOUNT_USERNAME_REQUIRED=False
         user = super(UserSignupForm, self).save(request)
         return user
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'dob', 'gender', 'marital_status', 'job_title', 
+            'location', 'education_qualification', 'work_place'
+        ]
+        widgets = {
+            'dob': forms.DateInput(attrs={'type': 'date'}),
+        }
