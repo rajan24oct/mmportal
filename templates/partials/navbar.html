@@ -7,8 +7,8 @@
     <div class="container">
       <!-- Logo START -->
       <a class="navbar-brand" href="/">
-        <img class="light-mode-item navbar-brand-item" src="{% static '/images/logo.svg' %}" alt="logo">
-        <img class="dark-mode-item navbar-brand-item" src="{% static '/images/logo.svg' %}" alt="logo">
+        <img class="light-mode-item navbar-brand-item" src="{% static 'images/logo.svg' %}" alt="logo">
+        <img class="dark-mode-item navbar-brand-item" src="{% static 'images/logo.svg' %}" alt="logo">
       </a>
       <!-- Logo END -->
 
@@ -229,7 +229,7 @@
                   <li>
                     <div class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3">
                       <div class="avatar text-center d-none d-sm-inline-block">
-                        <img class="avatar-img rounded-circle" src="{% static '/images/avatar/01.jpg' %}" alt="">
+                        <img class="avatar-img rounded-circle" src="{% static 'images/avatar/01.jpg' %}" alt="">
                       </div>
                       <div class="ms-sm-3">
                         <div class=" d-flex">
@@ -248,7 +248,7 @@
                     <div
                       class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3 position-relative">
                       <div class="avatar text-center d-none d-sm-inline-block">
-                        <img class="avatar-img rounded-circle" src="{% static '/images/avatar/02.jpg' %}" alt="">
+                        <img class="avatar-img rounded-circle" src="{% static 'images/avatar/02.jpg' %}" alt="">
                       </div>
                       <div class="ms-sm-3 d-flex">
                         <div>
@@ -279,7 +279,7 @@
                   <li>
                     <a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 p-3 mb-1">
                       <div class="avatar text-center d-none d-sm-inline-block">
-                        <img class="avatar-img rounded-circle" src="{% static '/images/logo/12.svg' %}" alt="">
+                        <img class="avatar-img rounded-circle" src="{% static 'images/logo/12.svg' %}" alt="">
                       </div>
                       <div class="ms-sm-3 d-flex">
                         <p class="small mb-2"><b>Bootstrap in the news:</b> The search giant’s parent company, Alphabet,
@@ -301,7 +301,7 @@
         <li class="nav-item ms-2 dropdown">
           <a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside"
             data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-            <img class="avatar-img rounded-2" src="{% static '/images/avatar/07.jpg' %}" alt="">
+            <img class="avatar-img rounded-2" src="{% static 'images/avatar/07.jpg' %}" alt="">
           </a>
           <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3"
             aria-labelledby="profileDropdown">
@@ -310,7 +310,7 @@
               <div class="d-flex align-items-center position-relative">
                 <!-- Avatar -->
                 <div class="avatar me-3">
-                  <img class="avatar-img rounded-circle" src="{% static '/images/avatar/07.jpg' %}" alt="avatar">
+                  <img class="avatar-img rounded-circle" src="{% static 'images/avatar/07.jpg' %}" alt="avatar">
                 </div>
                 <div>
                   <a class="h6 stretched-link" href="#">Lori Ferguson</a>
@@ -335,7 +335,7 @@
             </li>
             <li class="dropdown-divider"></li>
             <li><a class="dropdown-item bg-danger-soft-hover"
-                href="{% url 'pages:dynamic_pages' template_name='sign-in-advance' %}"><i
+                href="{% url 'account_logout' %}"><i
                   class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
             <li>
               <hr class="dropdown-divider">
