@@ -28,6 +28,7 @@ urlpatterns = [
     path("invitations/", include('invitations.urls', namespace='invitations')),
     path('accounts/', include('allauth.urls')),
     path('', include('users.urls', namespace='users')),
+    path("groups/", include("groups.urls", namespace="groups")),
     path("", include("pages.urls", namespace="pages")),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

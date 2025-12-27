@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+
+<main>
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Sidenav START -->
+            <div class="col-lg-3">
+                {% include 'partials/sidenav.html' %}
+            </div>
+            <!-- Sidenav END -->
+
+            <!-- Main content START -->
+            <div class="col-md-8 col-lg-9 vstack gap-4">
+                <!-- Card START -->
+                <div class="card">
+                    <div class="card-header border-0 pb-0">
+                        <h1 class="h4 card-title mb-lg-0">Groups</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            {% for group in groups %}
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="card h-100">
+                                    <div class="h-80px rounded-top"
+                                        style="background-image:url(/static/images/bg/01.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                                    </div>
+                                    <div class="card-body text-center pt-0">
+                                        <div class="avatar avatar-lg mt-n5 mb-3">
+                                            <a href="{% url 'groups:group_detail' group.pk %}">
+                                                <img class="avatar-img rounded-circle border border-white border-3 bg-white"
+                                                    src="{% static 'images/logo/placeholder.svg' %}" alt="">
+                                            </a>
+                                        </div>
+                                        <h5 class="mb-0"> <a href="{% url 'groups:group_detail' group.pk %}">
+                                            {{ group.name }}</a> </h5>
+                                        <small>{{ group.description|truncatechars:50 }}</small>
+                                        <div class="hstack gap-2 justify-content-center mt-3">
+                                            <div>
+                                                <h6 class="mb-0">{{ group.memberships.count }}</h6>
+                                                <small>Members</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <form action="{% url 'groups:group_join' group.pk %}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success-soft btn-sm w-100"> Join group
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12 text-center py-5">
+                                <i class="display-1 text-body-secondary bi bi-people"> </i>
+                                <h4 class="mt-2 mb-3 text-body">No groups found</h4>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

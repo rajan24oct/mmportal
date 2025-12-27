@@ -60,6 +60,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "users",
+    "groups",
     # Your stuff: custom apps go here
 ]
 

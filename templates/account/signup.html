@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load allauth i18n %}
+
+{% load static %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row justify-content-center align-items-center vh-100 py-5">
+		<!-- Main content START -->
+		<div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
+			<!-- Sign up START -->
+			<div class="card card-body rounded-3 p-4 p-sm-5">
+				<div class="text-center">
+					<!-- Title -->
+					<h1 class="mb-2">Sign up</h1>
+					<span class="d-block">Already have an account? <a href="{% url 'pages:dynamic_pages' template_name='sign-in' %}">Sign in here</a></span>
+				</div>
+                {% url 'account_signup' as action_url %}
+                {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+                    {% slot body %}
+                        {% csrf_token %}
+                        {% element fields form=form unlabeled=True %}
+                        {% endelement %}
+                        {{ redirect_field }}
+                    {% endslot %}
+                    {% slot actions %}
+                        {% element button tags="prominent,signup" type="submit" %}
+                            {% trans "Sign Up" %}
+                        {% endelement %}
+                    {% endslot %}
+                {% endelement %}
+
+				<!-- Form END -->
+			</div>
+			<!-- Sign up END -->
+		</div>
+	</div> <!-- Row END -->
+</div>
+
+{% endblock content %}
+
+{% block extra_javascript %}
+{% endblock extra_javascript %}
