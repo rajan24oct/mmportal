@@ -1,0 +1,163 @@
+{% extends "profile-layout.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+{% block page_content %}
+
+{% include 'partials/navbar.html' %}
+
+<!-- Card feed item START -->
+<div class="card">
+  <!-- Card header START -->
+  <div class="card-header border-0 pb-0">
+    <h5 class="card-title"> Profile Info</h5>
+  </div>
+  <!-- Card header END -->
+  <!-- Card body START -->
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      <div class="row g-4">
+        <div class="col-sm-6">
+          <label class="form-label">Birthday</label>
+          <input type="date" name="dob" class="form-control" value="{{ user.profile.dob|date:'Y-m-d' }}">
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label">Marital Status</label>
+          <select name="marital_status" class="form-select">
+            <option value="">Select Status</option>
+            {% for value, label in form.marital_status.field.choices %}
+            {% if value %}
+            <option value="{{ value }}" {% if form.marital_status.value == value %}selected{% endif %}>{{ label }}
+            </option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label">Gender</label>
+          <select name="gender" class="form-select">
+            <option value="">Select Gender</option>
+            {% for value, label in form.gender.field.choices %}
+            {% if value %}
+            <option value="{{ value }}" {% if form.gender.value == value %}selected{% endif %}>{{ label }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label">Job Title</label>
+          <input type="text" name="job_title" class="form-control" value="{{ user.profile.job_title|default:'' }}">
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label">Location</label>
+          <input type="text" name="location" class="form-control" value="{{ user.profile.location|default:'' }}">
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label">Education Qualification</label>
+          <input type="text" name="education_qualification" class="form-control"
+            value="{{ user.profile.education_qualification|default:'' }}">
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label">Work Place</label>
+          <input type="text" name="work_place" class="form-control" value="{{ user.profile.work_place|default:'' }}">
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- Card body END -->
+</div>
+<!-- Card feed item END -->
+
+<!-- Card feed item START -->
+<div class="card">
+  <!-- Card header START -->
+  <div class="card-header d-sm-flex justify-content-between border-0 pb-0">
+    <h5 class="card-title">Interests</h5>
+    <a class="btn btn-primary-soft btn-sm" href="#!"> See all</a>
+  </div>
+  <!-- Card header END -->
+  <!-- Card body START -->
+  <div class="card-body">
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-4">
+        <!-- Interests item START -->
+        <div class="d-flex align-items-center position-relative">
+          <div class="avatar">
+            <img class="avatar-img" src="{% static 'images/logo/04.svg' %}" alt="">
+          </div>
+          <div class="ms-2">
+            <h6 class="mb-0"> <a class="stretched-link" href="#"> Oracle </a></h6>
+            <p class="small mb-0">7,546,224 followers</p>
+          </div>
+        </div>
+        <!-- Interests item END -->
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <!-- Interests item START -->
+        <div class="d-flex align-items-center position-relative">
+          <div class="avatar">
+            <img class="avatar-img" src="{% static 'images/logo/13.svg' %}" alt="">
+          </div>
+          <div class="ms-2">
+            <h6 class="mb-0"> <a class="stretched-link" href="#"> Apple </a></h6>
+            <p class="small mb-0">102B followers</p>
+          </div>
+        </div>
+        <!-- Interests item END -->
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <!-- Interests item START -->
+        <div class="d-flex align-items-center position-relative">
+          <div class="avatar">
+            <img class="avatar-img rounded-circle" src="{% static 'images/avatar/placeholder.jpg' %}" alt="">
+          </div>
+          <div class="ms-2">
+            <h6 class="mb-0"> <a class="stretched-link" href="#"> Elon musk </a></h6>
+            <p class="small mb-0"> CEO and Product Architect of Tesla, Inc 41B followers</p>
+          </div>
+        </div>
+        <!-- Interests item END -->
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <!-- Interests item START -->
+        <div class="d-flex align-items-center position-relative">
+          <div class="avatar">
+            <img class="avatar-img" src="{% static 'images/events/04.jpg' %}" alt="">
+          </div>
+          <div class="ms-2">
+            <h6 class="mb-0"> <a class="stretched-link" href="#"> The X Factor </a></h6>
+            <p class="small mb-0">9,654 followers</p>
+          </div>
+        </div>
+        <!-- Interests item END -->
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <!-- Interests item START -->
+        <div class="d-flex align-items-center position-relative">
+          <div class="avatar">
+            <img class="avatar-img rounded-circle" src="{% static 'images/logo/12.svg' %}" alt="">
+          </div>
+          <div class="ms-2">
+            <h6 class="mb-0"> <a class="stretched-link" href="#"> Getbootstrap </a></h6>
+            <p class="small mb-0">8,457,224 followers</p>
+          </div>
+        </div>
+        <!-- Interests item END -->
+      </div>
+    </div>
+  </div>
+  <!-- Card body END -->
+</div>
+<!-- Card feed item END -->
+
+{% endblock page_content %}
+
+{% block extra_javascript %}
+{% endblock extra_javascript %}

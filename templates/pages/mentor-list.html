@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/@fortawesome/fontawesome-free/css/all.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap-icons/font/bootstrap-icons.min.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+
+<main>
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Sidenav START -->
+            <div class="col-lg-3">
+                {% include 'partials/sidenav.html' %}
+            </div>
+            <!-- Sidenav END -->
+
+            <!-- Main content START -->
+            <div class="col-md-8 col-lg-6 vstack gap-4">
+                
+                <!-- Search Filter START -->
+                <div class="card card-body">
+                    <form class="rounded position-relative" method="GET" action="{% url 'users:mentor_list' %}">
+                        <input class="form-control ps-5 bg-light" type="search" name="q" placeholder="Search mentors by name, title, or location..." aria-label="Search" value="{{ request.GET.q }}">
+                        <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><i class="bi bi-search fs-5 ps-1"> </i></button>
+                    </form>
+                </div>
+                <!-- Search Filter END -->
+
+                <!-- Mentor List START -->
+                <div class="card">
+                    <div class="card-header border-0 pb-0">
+                        <h5 class="card-title"> Mentors</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for mentor in mentors %}
+                        <div class="d-md-flex align-items-center mb-4">
+                            <!-- Avatar -->
+                            <div class="avatar me-3 mb-3 mb-md-0">
+                                <a href="{% url 'users:profile_about' mentor.pk %}">
+                                    {% if mentor.avatar %}
+                                        <img class="avatar-img rounded-circle" src="{{ mentor.avatar.url }}" alt="">
+                                    {% else %}
+                                        <img class="avatar-img rounded-circle" src="{% static 'images/avatar/placeholder.jpg' %}" alt="">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <!-- Info -->
+                            <div class="w-100">
+                                <div class="d-sm-flex align-items-start">
+                                    <h6 class="mb-0"><a href="{% url 'users:profile_about' mentor.pk %}">{{ mentor.user.get_full_name|default:mentor.user.email }}</a></h6>
+                                    <p class="small ms-sm-2 mb-0">{{ mentor.job_title|default:"Mentor" }}</p>
+                                </div>
+                                <ul class="list-inline small mb-0">
+                                    <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> {{ mentor.location|default:"Not specified" }}</li>
+                                    <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i> {{ mentor.work_place|default:"Not specified" }}</li>
+                                </ul>
+                            </div>
+                            <!-- Button -->
+                            <div class="ms-md-auto d-flex">
+                                <form action="{% url 'users:send_connection_request' mentor.user.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary-soft btn-sm mb-0"> Connect </button>
+                                </form>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p>No mentors found.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Mentor List END -->
+
+            </div>
+            <!-- Main content END -->
+
+        </div>
+    </div>
+</main>
+
+{% endblock content %}
