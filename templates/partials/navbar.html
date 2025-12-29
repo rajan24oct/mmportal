@@ -309,8 +309,8 @@
                   <img class="avatar-img rounded-circle" src="{% static 'images/avatar/07.jpg' %}" alt="avatar">
                 </div>
                 <div>
-                  <a class="h6 stretched-link" href="#">Lori Ferguson</a>
-                  <p class="small m-0">Web Developer</p>
+                  <a class="h6 stretched-link" href="#">{{ user.first_name }} {{ user.last_name }}</a>
+                  <p class="small m-0">{{ user.profile.job_title }}</p>
                 </div>
               </div>
               <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"

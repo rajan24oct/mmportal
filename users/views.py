@@ -24,6 +24,7 @@ class ProfileAboutUpdateView(LoginRequiredMixin, UpdateView):
     model = UserProfile
     form_class = UserProfileForm
     template_name = 'pages/my-profile-about-edit.html'
+    context_object_name = 'profile'
 
     def get_object(self, queryset=None):
         profile, created = UserProfile.objects.get_or_create(user=self.request.user)
