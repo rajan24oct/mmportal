@@ -80,21 +80,18 @@
               <li class="dropdown-submenu dropend">
                 <a class="dropdown-item dropdown-toggle" href="#!">Profile</a>
                 <ul class="dropdown-menu" data-bs-popper="none">
+                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=posts">Feed</a> </li>
+                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=about">About</a> </li>
                   <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='my-profile' %}">Feed</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='my-profile-about' %}">About</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='my-profile-connections' %}">Connections</a>
+                      href="{% url 'users:profile_redirect' %}?section=connections">Connections</a>
                   </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='my-profile-media' %}">Media</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='my-profile-videos' %}">Videos</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='my-profile-events' %}">Events</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='my-profile-activity' %}">Activity</a> </li>
+                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=media">Media</a> </li>
+                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=videos">Videos</a>
+                  </li>
+                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=events">Events</a>
+                  </li>
+                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=activity">Activity</a>
+                  </li>
                 </ul>
               </li>
               <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='events' %}">Events</a>
@@ -161,12 +158,11 @@
               <li class="dropdown-submenu dropstart">
                 <a class="dropdown-item dropdown-toggle" href="#">Authentication</a>
                 <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="none">
-                  <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='sign-in' %}">Sign
+                  <li> <a class="dropdown-item" href="{% url 'account_login' %}">Sign
                       in</a> </li>
-                  <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='sign-up' %}">Sing
+                  <li> <a class="dropdown-item" href="{% url 'account_signup' %}">Sing
                       up</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='forgot-password' %}">Forgot password</a> </li>
+                  <li> <a class="dropdown-item" href="{% url 'account_reset_password' %}">Forgot password</a> </li>
                   <li class="dropdown-divider"></li>
                   <li> <a class="dropdown-item"
                       href="{% url 'pages:dynamic_pages' template_name='sign-in-advance' %}">Sign in advance</a> </li>
@@ -188,7 +184,7 @@
 
           <!-- Nav item 4 Mega menu -->
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'pages:dynamic_pages' template_name='my-profile-connections' %}">My
+            <a class="nav-link" href="{% url 'users:profile_redirect' %}?section=connections">My
               network</a>
           </li>
         </ul>
@@ -318,7 +314,7 @@
                 </div>
               </div>
               <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
-                href="{% url 'pages:dynamic_pages' template_name='my-profile' %}">View
+                href="{% url 'users:profile_redirect' %}">View
                 profile</a>
               <a class="dropdown-item btn btn-warning-soft btn-sm my-2 text-center"
                 href="{% url 'users:profile_about_edit' %}">Edit
@@ -334,8 +330,7 @@
               </a>
             </li>
             <li class="dropdown-divider"></li>
-            <li><a class="dropdown-item bg-danger-soft-hover"
-                href="{% url 'account_logout' %}"><i
+            <li><a class="dropdown-item bg-danger-soft-hover" href="{% url 'account_logout' %}"><i
                   class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
             <li>
               <hr class="dropdown-divider">

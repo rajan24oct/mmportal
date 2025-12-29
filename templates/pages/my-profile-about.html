@@ -1,5 +1,5 @@
 {% extends "profile-layout.html" %}
-
+{% load allauth i18n %}
 {% load static %}
 
 {% block extra_css %}
@@ -21,6 +21,7 @@
     <div class="rounded border px-3 py-2 mb-3">
       <div class="d-flex align-items-center justify-content-between">
         <h6>Overview</h6>
+        {% if request.user == profile.user %}
         <div class="dropdown ms-auto">
           <!-- Card share action menu -->
           <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction" data-bs-toggle="dropdown"
@@ -29,14 +30,13 @@
           </a>
           <!-- Card share action dropdown menu -->
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction">
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
+            <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                  class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
           </ul>
         </div>
+        {% endif %}
       </div>
-      <p>He moonlights difficult engrossed it, sportsmen. Interested has all Devonshire difficulty gay
-        assistance joy. Handsome met debating sir dwelling age material. As style lived he worse dried.
-        Offered related so visitors we private removed. Moderate do subjects to distance. </p>
+      <p>{{ profile.about|default:"No information provided yet." }}</p>
     </div>
     <div class="row g-4">
       <div class="col-sm-6">
@@ -44,8 +44,9 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> {{ user.profile.dob|default:"N/A" }} </strong>
+            <i class="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> {{ profile.dob|default:"N/A" }} </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction2" data-bs-toggle="dropdown"
@@ -59,6 +60,7 @@
               </li>
             </ul>
           </div>
+          {% endif %}
         </div>
         <!-- Birthday END -->
       </div>
@@ -68,8 +70,9 @@
           <!-- Date -->
           <p class="mb-0">
             <i class="bi bi-heart fa-fw me-2"></i> Status:
-              <strong> {{ user.profile.get_marital_status_display|default:"N/A" }} </strong>
+            <strong> {{ profile.get_marital_status_display|default:"N/A" }} </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction3" data-bs-toggle="dropdown"
@@ -83,6 +86,7 @@
               </li>
             </ul>
           </div>
+          {% endif %}
         </div>
         <!-- Status END -->
       </div>
@@ -91,8 +95,9 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-briefcase fa-fw me-2"></i> <strong> {{ user.profile.job_title|default:"N/A" }} </strong>
+            <i class="bi bi-briefcase fa-fw me-2"></i> <strong> {{ profile.job_title|default:"N/A" }} </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction4" data-bs-toggle="dropdown"
@@ -106,6 +111,7 @@
               </li>
             </ul>
           </div>
+          {% endif %}
         </div>
         <!-- Designation END -->
       </div>
@@ -114,9 +120,10 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-geo-alt fa-fw me-2"></i> Lives in: <strong> {{ user.profile.location|default:"N/A" }}
+            <i class="bi bi-geo-alt fa-fw me-2"></i> Lives in: <strong> {{ profile.location|default:"N/A" }}
             </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction5" data-bs-toggle="dropdown"
@@ -130,6 +137,7 @@
               </li>
             </ul>
           </div>
+          {% endif %}
         </div>
         <!-- Lives END -->
       </div>
@@ -171,9 +179,10 @@
         <!-- Workplace on START -->
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <p class="mb-0">
-            <i class="bi bi-building fa-fw me-2"></i> Workplace: <strong> {{ user.profile.work_place|default:"N/A" }}
+            <i class="bi bi-building fa-fw me-2"></i> Workplace: <strong> {{ profile.work_place|default:"N/A" }}
             </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction8" data-bs-toggle="dropdown"
               aria-expanded="false">
@@ -185,6 +194,7 @@
               </li>
             </ul>
           </div>
+          {% endif %}
         </div>
       </div>
       <div class="col-sm-6">
@@ -192,8 +202,9 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <p class="mb-0">
             <i class="bi bi-book fa-fw me-2"></i> Education:
-              <strong> {{ user.profile.education_qualification|default:"N/A" }} </strong>
+            <strong> {{ profile.education_qualification|default:"N/A" }} </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction9" data-bs-toggle="dropdown"
               aria-expanded="false">
@@ -205,6 +216,7 @@
               </li>
             </ul>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>

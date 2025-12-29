@@ -23,7 +23,7 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = [
             'dob', 'gender', 'marital_status', 'job_title', 
-            'location', 'education_qualification', 'work_place'
+            'location', 'education_qualification', 'work_place', 'about', 'profile_picture'
         ]
         widgets = {
             'dob': forms.DateInput(attrs={'type': 'date'}),

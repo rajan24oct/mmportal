@@ -113,6 +113,8 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=100, null=True, blank=True)
     education_qualification = models.CharField(max_length=100, null=True, blank=True)
     work_place = models.CharField(max_length=100, null=True, blank=True)
+    about = models.TextField(blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     
 
     def __str__(self):
@@ -136,3 +138,17 @@ class ConnectionRequest(models.Model):
 
     def __str__(self):
         return f"{self.sender.email} -> {self.recipient.email} ({self.status})"
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sent_messages', on_delete=models.CASCADE)
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='received_messages', on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f"From {self.sender.email} to {self.recipient.email} at {self.created_at}"

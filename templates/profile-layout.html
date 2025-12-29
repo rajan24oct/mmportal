@@ -30,52 +30,56 @@
                                 <!-- Avatar -->
                                 <div class="avatar avatar-xxl mt-n5 mb-3">
                                     <img class="avatar-img rounded-circle border border-white border-3"
-                                        src="{% static 'images/avatar/07.jpg' %}" alt="">
+                                        src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
+                                        alt="">
                                 </div>
                             </div>
                             <div class="ms-sm-4 mt-sm-3">
                                 <!-- Info -->
-                                <h1 class="mb-0 h5">Sam Lanson <i class="bi bi-patch-check-fill text-success small"></i>
+                                <h1 class="mb-0 h5">{{ profile.user.get_full_name|default:profile.user.email }} <i
+                                        class="bi bi-patch-check-fill text-success small"></i>
                                 </h1>
-                                <p>250 connections</p>
+                                <p>{{ connection_count }} connections</p>
                             </div>
                             <!-- Button -->
                             <div class="d-flex mt-3 justify-content-center ms-sm-auto">
+                                {% if request.user == profile.user %}
                                 <a class="btn btn-danger-soft me-2" href="{% url 'users:profile_about_edit' %}"> <i
                                         class="bi bi-pencil-fill pe-1"></i> Edit
                                     profile </a>
+                                {% else %}
+                                {% if connection_request.status == 'accepted' %}
+                                <a class="btn btn-success-soft me-2"
+                                    href="{% url 'users:message_detail' partner_pk=profile.user.pk %}"> <i
+                                        class="bi bi-chat-left-text-fill pe-1"></i> Message </a>
+                                {% elif connection_request.status == 'pending' %}
+                                <button class="btn btn-secondary me-2" disabled> Pending </button>
+                                {% else %}
+                                <form action="{% url 'users:send_connection_request' pk=profile.user.pk %}"
+                                    method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary-soft me-2"> <i
+                                            class="bi bi-person-plus-fill pe-1"></i> Connect </button>
+                                </form>
+                                {% endif %}
+                                {% endif %}
                                 <div class="dropdown">
-                                    <!-- Card share action menu -->
                                     <button class="icon-md btn btn-light" type="button" id="profileAction2"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots"></i>
                                     </button>
-                                    <!-- Card share action dropdown menu -->
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileAction2">
-                                        <li><a class="dropdown-item" href="#"> <i
-                                                    class="bi bi-bookmark fa-fw pe-2"></i>Share profile in a
-                                                message</a></li>
-                                        <li><a class="dropdown-item" href="#"> <i
-                                                    class="bi bi-file-earmark-pdf fa-fw pe-2"></i>Save your
-                                                profile to PDF</a></li>
-                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-lock fa-fw pe-2"></i>Lock
-                                                profile</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" href="#"> <i
-                                                    class="bi bi-gear fa-fw pe-2"></i>Profile settings</a>
-                                        </li>
-                                    </ul>
+                                    <!-- ... rest of dropdown ... -->
                                 </div>
                             </div>
                         </div>
                         <!-- List profile -->
                         <ul class="list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">
-                            <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i> Lead Developer</li>
-                            <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> New Hampshire</li>
-                            <li class="list-inline-item"><i class="bi bi-calendar2-plus me-1"></i> Joined on Nov 26,
-                                2019</li>
+                            <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i>
+                                {{ profile.job_title|default:"N/A" }} </li>
+                            <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i>
+                                {{ profile.location|default:"N/A" }}</li>
+                            <li class="list-inline-item"><i class="bi bi-calendar2-plus me-1"></i> Joined on
+                                {{ profile.user.date_joining|date:"M d, Y" }}</li>
                         </ul>
                     </div>
                     <!-- Card body END -->
@@ -83,27 +87,26 @@
                         <!-- Nav profile pages -->
                         <ul class="nav nav-bottom-line align-items-center justify-content-center justify-content-md-start mb-0 border-0"
                             id="sidebar-account">
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{% url 'pages:dynamic_pages' template_name='my-profile' %}"> Posts </a> </li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{% url 'pages:dynamic_pages' template_name='my-profile-about' %}"> About </a>
+                            <li class="nav-item"> <a
+                                    class="nav-link {% if request.GET.section == 'posts' %}active{% endif %}"
+                                    href="{% url 'users:profile_about' pk=profile.pk %}?section=posts"> Posts </a> </li>
+                            <li class="nav-item"> <a
+                                    class="nav-link {% if not request.GET.section or request.GET.section == 'about' %}active{% endif %}"
+                                    href="{% url 'users:profile_about' pk=profile.pk %}?section=about"> About </a>
                             </li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{% url 'pages:dynamic_pages' template_name='my-profile-connections' %}">
+                            <li class="nav-item"> <a
+                                    class="nav-link {% if request.GET.section == 'connections' %}active{% endif %}"
+                                    href="{% url 'users:profile_about' pk=profile.pk %}?section=connections">
                                     Connections <span class="badge bg-success bg-opacity-10 text-success small">
-                                        230</span> </a> </li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{% url 'pages:dynamic_pages' template_name='my-profile-media' %}"> Media</a>
+                                        {{ connection_count }}</span> </a> </li>
+                            <li class="nav-item"> <a
+                                    class="nav-link {% if request.GET.section == 'media' %}active{% endif %}"
+                                    href="{% url 'users:profile_about' pk=profile.pk %}?section=media"> Media</a>
                             </li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{% url 'pages:dynamic_pages' template_name='my-profile-videos' %}"> Videos</a>
+                            <li class="nav-item"> <a
+                                    class="nav-link {% if request.GET.section == 'videos' %}active{% endif %}"
+                                    href="{% url 'users:profile_about' pk=profile.pk %}?section=videos"> Videos</a>
                             </li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{% url 'pages:dynamic_pages' template_name='my-profile-events' %}"> Events</a>
-                            </li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{% url 'pages:dynamic_pages' template_name='my-profile-activity' %}">
-                                    Activity</a> </li>
                         </ul>
                     </div>
                 </div>
@@ -128,17 +131,17 @@
                             </div>
                             <!-- Card body START -->
                             <div class="card-body position-relative pt-0">
-                                <p>He moonlights difficult engrossed it, sportsmen. Interested has all Devonshire
-                                    difficulty gay
-                                    assistance joy.</p>
+                                <p>{{ profile.about|truncatechars:100 }}</p>
                                 <!-- Date time -->
                                 <ul class="list-unstyled mt-3 mb-0">
-                                    <li class="mb-2"> <i class="bi bi-calendar-date fa-fw pe-1"></i> Born: <strong>
-                                            October 20, 1990
+                                    <li class="mb-2"> <i class="bi bi-briefcase fa-fw pe-1"></i> Designation: <strong>
+                                            {{ profile.job_title|default:"N/A" }}
                                         </strong> </li>
-                                    <li class="mb-2"> <i class="bi bi-heart fa-fw pe-1"></i> Status: <strong> Single
+                                    <li class="mb-2"> <i class="bi bi-heart fa-fw pe-1"></i> Status: <strong>
+                                            {{ profile.get_marital_status_display|default:"N/A" }}
                                         </strong> </li>
-                                    <li> <i class="bi bi-envelope fa-fw pe-1"></i> Email: <strong> example@xyz.com
+                                    <li> <i class="bi bi-envelope fa-fw pe-1"></i> Email: <strong>
+                                            {{ profile.user.email }}
                                         </strong> </li>
                                 </ul>
                             </div>
@@ -224,47 +227,15 @@
                             <!-- Card body START -->
                             <div class="card-body position-relative pt-0">
                                 <div class="row g-2">
-                                    <!-- Photos item -->
-                                    <div class="col-6">
-                                        <a href="{% static 'images/albums/01.jpg' %}" data-gallery="image-popup"
-                                            data-glightbox="">
-                                            <img class="rounded img-fluid" src="{% static 'images/albums/01.jpg' %}"
-                                                alt="">
+                                    {% for post in media|slice:":5" %}
+                                    <div class="col-{% if forloop.counter <= 2 %}6{% else %}4{% endif %}">
+                                        <a href="{{ post.image.url }}" data-gallery="image-popup" data-glightbox="">
+                                            <img class="rounded img-fluid" src="{{ post.image.url }}" alt="">
                                         </a>
                                     </div>
-                                    <!-- Photos item -->
-                                    <div class="col-6">
-                                        <a href="{% static 'images/albums/02.jpg' %}" data-gallery="image-popup"
-                                            data-glightbox="">
-                                            <img class="rounded img-fluid" src="{% static 'images/albums/02.jpg' %}"
-                                                alt="">
-                                        </a>
-                                    </div>
-                                    <!-- Photos item -->
-                                    <div class="col-4">
-                                        <a href="{% static 'images/albums/03.jpg' %}" data-gallery="image-popup"
-                                            data-glightbox="">
-                                            <img class="rounded img-fluid" src="{% static 'images/albums/03.jpg' %}"
-                                                alt="">
-                                        </a>
-                                    </div>
-                                    <!-- Photos item -->
-                                    <div class="col-4">
-                                        <a href="{% static 'images/albums/04.jpg' %}" data-gallery="image-popup"
-                                            data-glightbox="">
-                                            <img class="rounded img-fluid" src="{% static 'images/albums/04.jpg' %}"
-                                                alt="">
-                                        </a>
-                                    </div>
-                                    <!-- Photos item -->
-                                    <div class="col-4">
-                                        <a href="{% static 'images/albums/05.jpg' %}" data-gallery="image-popup"
-                                            data-glightbox="">
-                                            <img class="rounded img-fluid" src="{% static 'images/albums/05.jpg' %}"
-                                                alt="">
-                                        </a>
-                                        <!-- glightbox Albums left bar END  -->
-                                    </div>
+                                    {% empty %}
+                                    <p class="small text-center">No photos yet.</p>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <!-- Card body END -->
@@ -285,107 +256,35 @@
                             <!-- Card body START -->
                             <div class="card-body position-relative pt-0">
                                 <div class="row g-3">
-
+                                    {% for conn in connections|slice:":4" %}
                                     <div class="col-6">
                                         <!-- Friends item START -->
                                         <div class="card shadow-none text-center h-100">
                                             <!-- Card body -->
                                             <div class="card-body p-2 pb-0">
                                                 <div class="avatar avatar-story avatar-xl">
-                                                    <a href="#!"><img class="avatar-img rounded-circle"
-                                                            src="{% static 'images/avatar/02.jpg' %}" alt=""></a>
+                                                    <a href="{% url 'users:profile_about' pk=profile.pk %}"><img
+                                                            class="avatar-img rounded-circle"
+                                                            src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
+                                                            alt=""></a>
                                                 </div>
-                                                <h6 class="card-title mb-1 mt-3"> <a href="#!"> Amanda Reed </a></h6>
-                                                <p class="mb-0 small lh-sm">16 mutual connections</p>
+                                                <h6 class="card-title mb-1 mt-3"> <a
+                                                        href="{% url 'users:profile_about' pk=profile.pk %}"> {{
+                                                        profile.get_full_name|default:profile.email }} </a></h6>
                                             </div>
                                             <!-- Card footer -->
                                             <div class="card-footer p-2 border-0">
-                                                <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip"
+                                                <a href="{% url 'users:message_detail' partner_pk=profile.user.pk %}"
+                                                    class="btn btn-sm btn-primary" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Send message"> <i
-                                                        class="bi bi-chat-left-text"></i> </button>
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Remove friend"> <i
-                                                        class="bi bi-person-x"></i> </button>
+                                                        class="bi bi-chat-left-text"></i> </a>
                                             </div>
                                         </div>
                                         <!-- Friends item END -->
                                     </div>
-
-                                    <div class="col-6">
-                                        <!-- Friends item START -->
-                                        <div class="card shadow-none text-center h-100">
-                                            <!-- Card body -->
-                                            <div class="card-body p-2 pb-0">
-                                                <div class="avatar avatar-xl">
-                                                    <a href="#!"><img class="avatar-img rounded-circle"
-                                                            src="{% static 'images/avatar/03.jpg' %}" alt=""></a>
-                                                </div>
-                                                <h6 class="card-title mb-1 mt-3"> <a href="#!"> Samuel Bishop </a></h6>
-                                                <p class="mb-0 small lh-sm">22 mutual connections</p>
-                                            </div>
-                                            <!-- Card footer -->
-                                            <div class="card-footer p-2 border-0">
-                                                <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Send message"> <i
-                                                        class="bi bi-chat-left-text"></i> </button>
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Remove friend"> <i
-                                                        class="bi bi-person-x"></i> </button>
-                                            </div>
-                                        </div>
-                                        <!-- Friends item END -->
-                                    </div>
-
-                                    <div class="col-6">
-                                        <!-- Friends item START -->
-                                        <div class="card shadow-none text-center h-100">
-                                            <!-- Card body -->
-                                            <div class="card-body p-2 pb-0">
-                                                <div class="avatar avatar-xl">
-                                                    <a href="#!"><img class="avatar-img rounded-circle"
-                                                            src="{% static 'images/avatar/04.jpg' %}" alt=""></a>
-                                                </div>
-                                                <h6 class="card-title mb-1 mt-3"> <a href="#"> Bryan Knight </a></h6>
-                                                <p class="mb-0 small lh-sm">1 mutual connection</p>
-                                            </div>
-                                            <!-- Card footer -->
-                                            <div class="card-footer p-2 border-0">
-                                                <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Send message"> <i
-                                                        class="bi bi-chat-left-text"></i> </button>
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Remove friend"> <i
-                                                        class="bi bi-person-x"></i> </button>
-                                            </div>
-                                        </div>
-                                        <!-- Friends item END -->
-                                    </div>
-
-                                    <div class="col-6">
-                                        <!-- Friends item START -->
-                                        <div class="card shadow-none text-center h-100">
-                                            <!-- Card body -->
-                                            <div class="card-body p-2 pb-0">
-                                                <div class="avatar avatar-xl">
-                                                    <a href="#!"><img class="avatar-img rounded-circle"
-                                                            src="{% static 'images/avatar/05.jpg' %}" alt=""></a>
-                                                </div>
-                                                <h6 class="card-title mb-1 mt-3"> <a href="#!"> Amanda Reed </a></h6>
-                                                <p class="mb-0 small lh-sm">15 mutual connections</p>
-                                            </div>
-                                            <!-- Card footer -->
-                                            <div class="card-footer p-2 border-0">
-                                                <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Send message"> <i
-                                                        class="bi bi-chat-left-text"></i> </button>
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Remove friend"> <i
-                                                        class="bi bi-person-x"></i> </button>
-                                            </div>
-                                        </div>
-                                        <!-- Friends item END -->
-                                    </div>
-
+                                    {% empty %}
+                                    <p class="small text-center">No connections yet.</p>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <!-- Card body END -->

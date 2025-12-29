@@ -34,6 +34,7 @@ INTERNAL_IPS = [
 ]
 
 
+
 # Application definition
 DJANGO_APPS = [
     "django.contrib.auth",
@@ -61,6 +62,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "users",
     "groups",
+    "posts",
     # Your stuff: custom apps go here
 ]
 
@@ -135,6 +137,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+AUTHENTICATION_BACKENDS = [
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 # Static files (CSS, JavaScript, Images)

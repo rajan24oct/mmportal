@@ -2,13 +2,23 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.generic import UpdateView, DetailView, ListView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from .models import UserProfile, ConnectionRequest
+from .models import UserProfile, ConnectionRequest, Message
 from .forms import UserProfileForm
+from posts.models import Post
 
 User = get_user_model()
+
+def profile_redirect(request):
+    if request.user.is_authenticated:
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        url = reverse('users:profile_about', kwargs={'pk': profile.pk})
+        if request.GET:
+            url = f"{url}?{request.GET.urlencode()}"
+        return redirect(url)
+    return redirect('account_login')
 
 class ProfileAboutUpdateView(LoginRequiredMixin, UpdateView):
     model = UserProfile
@@ -22,9 +32,97 @@ class ProfileAboutUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('users:profile_about', kwargs={'pk': self.object.pk})
 
-class ProfileAboutDetailView(LoginRequiredMixin, DetailView):
+class ProfileView(LoginRequiredMixin, DetailView):
     model = UserProfile
-    template_name = 'pages/my-profile-about.html'
+    context_object_name = 'profile'
+
+    def get_template_names(self):
+        section = self.request.GET.get('section', 'about')
+        if section == 'posts':
+            return ['pages/my-profile.html']
+        elif section == 'connections':
+            return ['pages/my-profile-connections.html']
+        elif section == 'media':
+            return ['pages/my-profile-media.html']
+        elif section == 'videos':
+            return ['pages/my-profile-videos.html']
+        return ['pages/my-profile-about.html']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.object.user
+        
+        # Connections
+        sent_requests = ConnectionRequest.objects.filter(sender=user, status='accepted')
+        received_requests = ConnectionRequest.objects.filter(recipient=user, status='accepted')
+        
+        connections = []
+        for req in sent_requests:
+            connections.append(req.recipient)
+        for req in received_requests:
+            connections.append(req.sender)
+        
+        context['connections'] = connections[:10] # Initial load
+        context['connection_count'] = len(connections)
+        
+        # Posts and Media
+        user_posts = Post.objects.filter(author=user).order_by('-created_at')
+        context['posts'] = user_posts
+        context['media'] = user_posts.filter(image__isnull=False).exclude(image='')
+        context['videos'] = user_posts.filter(video__isnull=False).exclude(video='')
+        
+        # Connection status with viewer
+        if self.request.user != user:
+            context['connection_request'] = ConnectionRequest.objects.filter(
+                (Q(sender=self.request.user) & Q(recipient=user)) |
+                (Q(sender=user) & Q(recipient=self.request.user))
+            ).first()
+            
+        return context
+
+class MessageListView(LoginRequiredMixin, ListView):
+    model = Message
+    template_name = 'pages/messaging.html'
+    context_object_name = 'messages'
+
+    def get_queryset(self):
+        # List all connections for messaging sidebar
+        return Message.objects.filter(
+            Q(sender=self.request.user) | Q(recipient=self.request.user)
+        ).order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get unique conversation partners
+        user = self.request.user
+        partners = User.objects.filter(
+            Q(sent_messages__recipient=user) | Q(received_messages__sender=user)
+        ).distinct()
+        context['partners'] = partners
+        return context
+
+class MessageDetailView(LoginRequiredMixin, View):
+    def get(self, request, partner_pk):
+        partner = get_object_or_404(User, pk=partner_pk)
+        messages = Message.objects.filter(
+            (Q(sender=request.user) & Q(recipient=partner)) |
+            (Q(sender=partner) & Q(recipient=request.user))
+        ).order_by('created_at')
+        
+        # Mark as read
+        messages.filter(recipient=request.user, is_read=False).update(is_read=True)
+        
+        return render(request, 'pages/messaging-detail.html', {
+            'partner': partner,
+            'messages': messages
+        })
+
+    def post(self, request, partner_pk):
+        partner = get_object_or_404(User, pk=partner_pk)
+        content = request.POST.get('content')
+        if content:
+            Message.objects.create(sender=request.user, recipient=partner, content=content)
+        return redirect('users:message_detail', partner_pk=partner_pk)
 
 
 class MentorListView(LoginRequiredMixin, ListView):
