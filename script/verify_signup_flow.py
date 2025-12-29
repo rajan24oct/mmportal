@@ -84,7 +84,7 @@ def run_test():
          if errors:
              print(f"HTML Errors found: {errors}")
     
-    with open('debug_signup_response.html', 'w') as f:
+    with open('../debug_signup_response.html', 'w') as f:
         f.write(content)
     print("Dumped response to debug_signup_response.html")
 
