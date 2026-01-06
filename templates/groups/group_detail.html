@@ -75,15 +75,15 @@
                                 </a> </li>
                             <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#group-tab-3">
                                     Connections <span class="badge bg-success bg-opacity-10 text-success small">
-                                {{ members.count }}</span> </a> </li>
+                                        {{ members.count }}</span> </a> </li>
                             <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#group-tab-4">
                                     Media</a> </li>
                             <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#group-tab-5">
                                     Videos</a> </li>
                             {% if is_moderator %}
                             <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#group-tab-moderation">
-                                    Moderation <span class="badge bg-danger bg-opacity-10 text-danger small"> {{
-                                        pending_members.count }}</span> </a> </li>
+                                    Moderation <span class="badge bg-danger bg-opacity-10 text-danger small">
+                                {{ pending_members.count }}</span> </a> </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -130,7 +130,7 @@
                                 <!-- Share feed END -->
 
                                 <!-- Card feed items -->
-                                {% for message in messages %}
+                                {% for message in group_messages %}
                                 <div class="card">
                                     <div class="card-header border-0 pb-0">
                                         <div class="d-flex align-items-center justify-content-between">
@@ -142,7 +142,7 @@
                                                 <div>
                                                     <div class="nav nav-divider">
                                                         <h6 class="nav-item card-title mb-0"> <a href="#!">
-                                                            {{ message.user.get_full_name|default:message.user.email }}
+                                                                {{ message.user.get_full_name|default:message.user.email }}
                                                             </a></h6>
                                                         <span class="nav-item small"> {{ message.created_at|timesince }}
                                                             ago</span>
@@ -167,13 +167,84 @@
                                                 <form action="{% url 'groups:like_message' message.pk %}" method="POST">
                                                     {% csrf_token %}
                                                     <button type="submit"
-                                                        class="nav-link border-0 bg-transparent {% if request.user in message.likes.all %}text-primary{% endif %}">
-                                                        <i class="bi bi-hand-thumbs-up-fill pe-1"></i> Like
+                                                        class="nav-link border-0 bg-transparent {% if request.user in message.likes.all %}active{% endif %}">
+                                                        <i class="bi bi-hand-thumbs-up-fill pe-1"></i> Liked
                                                         ({{ message.likes.count }})
                                                     </button>
                                                 </form>
                                             </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#!"> <i
+                                                        class="bi bi-chat-fill pe-1"></i>Comments (
+                                                    {{ message.comments.count }})</a>
+                                            </li>
                                         </ul>
+
+                                        <!-- Add comment -->
+                                        <div class="d-flex mb-3">
+                                            <!-- Avatar -->
+                                            <div class="avatar avatar-xs me-2">
+                                                <a href="#!"> <img class="avatar-img rounded-circle"
+                                                        src="{% if request.user.profile.profile_picture %}{{ request.user.profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
+                                                        alt="">
+                                                </a>
+                                            </div>
+                                            <!-- Comment box  -->
+                                            <form class="position-relative w-100"
+                                                action="{% url 'groups:comment_message' message.pk %}" method="POST">
+                                                {% csrf_token %}
+                                                <textarea class="form-control pe-4 bg-light" name="content" rows="1"
+                                                    placeholder="Add a comment..."></textarea>
+                                                <!-- Button -->
+                                                <button
+                                                    class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
+                                                    type="submit">
+                                                    <i class="bi bi-send-fill text-primary"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <!-- Comment wrap START -->
+                                        <ul class="comment-wrap list-unstyled">
+                                            {% for comment in message.comments.all %}
+                                            <!-- Comment item START -->
+                                            <li class="comment-item">
+                                                <div class="d-flex position-relative">
+                                                    <div class="comment-line-inner"></div>
+                                                    <!-- Avatar -->
+                                                    <div class="avatar avatar-xs">
+                                                        <a href="#!"><img class="avatar-img rounded-circle"
+                                                                src="{% if comment.user.profile.profile_picture %}{{ comment.user.profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
+                                                                alt=""></a>
+                                                    </div>
+                                                    <div class="ms-2">
+                                                        <!-- Comment by -->
+                                                        <div class="bg-light rounded-start-top-0 p-3 rounded">
+                                                            <div class="d-flex justify-content-center">
+                                                                <div class="me-2">
+                                                                    <h6 class="mb-1"> <a href="#!">
+                                                                        {{ comment.user.get_full_name|default:comment.user.email }}
+                                                                    </a></h6>
+                                                                    <p class="small mb-0">{{ comment.content }}</p>
+                                                                </div>
+                                                                <small>{{ comment.created_at|timesince }} ago</small>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Comment react -->
+                                                        <ul class="nav nav-divider py-2 small">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="#!"> Like</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="#!"> Reply</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- Comment item END -->
+                                            {% endfor %}
+                                        </ul>
+                                        <!-- Comment wrap END -->
                                     </div>
                                 </div>
                                 {% empty %}
@@ -193,9 +264,11 @@
                                         <p>{{ group.description|default:"No description provided." }}</p>
                                         <ul class="list-unstyled mt-3 mb-0">
                                             <li class="mb-2"> <i class="bi bi-calendar-date fa-fw pe-1"></i> Members:
-                                                <strong> {{ group.memberships.count }} </strong> </li>
+                                                <strong> {{ group.memberships.count }} </strong>
+                                            </li>
                                             <li class="mb-2"> <i class="bi bi-heart fa-fw pe-1"></i> Status: <strong>
-                                                {% if group.is_private %}Private{% else %}Public{% endif %} </strong>
+                                                    {% if group.is_private %}Private{% else %}Public{% endif %}
+                                                </strong>
                                             </li>
                                         </ul>
                                     </div>

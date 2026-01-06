@@ -25,12 +25,12 @@ class GroupDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        messages = self.object.messages.all().order_by('-created_at')
-        context['messages'] = messages
+        group_messages = self.object.messages.all().order_by('-created_at')
+        context['group_messages'] = group_messages
         context['members'] = self.object.memberships.filter(status='approved')
         context['pending_members'] = self.object.memberships.filter(status='pending')
-        context['media'] = messages.filter(image__isnull=False).exclude(image='')
-        context['videos'] = messages.filter(video__isnull=False).exclude(video='')
+        context['media'] = group_messages.filter(image__isnull=False).exclude(image='')
+        context['videos'] = group_messages.filter(video__isnull=False).exclude(video='')
         context['is_member'] = self.object.memberships.filter(user=self.request.user, status='approved').exists()
         context['is_moderator'] = self.object.moderator == self.request.user
         return context
@@ -63,3 +63,12 @@ class LikeGroupMessageView(LoginRequiredMixin, View):
         else:
             message.likes.add(request.user)
         return redirect('groups:group_detail', pk=message.group.pk)
+
+class GroupCommentView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        message = get_object_or_404(GroupMessage, pk=pk)
+        content = request.POST.get('content')
+        if content:
+            GroupComment.objects.create(message=message, user=request.user, content=content)
+        return redirect('groups:group_detail', pk=message.group.pk)
+

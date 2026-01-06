@@ -5,7 +5,8 @@ from .views import (
     GroupDetailView,
     GroupModerationView,
     PostGroupMessageView,
-    LikeGroupMessageView
+    LikeGroupMessageView,
+    GroupCommentView
 )
 
 app_name = 'groups'
@@ -17,4 +18,6 @@ urlpatterns = [
     path('moderate/<int:pk>/<str:action>/', GroupModerationView.as_view(), name='group_moderate'),
     path('<int:pk>/post/', PostGroupMessageView.as_view(), name='post_message'),
     path('message/like/<int:pk>/', LikeGroupMessageView.as_view(), name='like_message'),
+    path('message/comment/<int:pk>/', GroupCommentView.as_view(), name='comment_message'),
 ]
+

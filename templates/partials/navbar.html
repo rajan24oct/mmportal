@@ -92,6 +92,9 @@
                   </li>
                   <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=activity">Activity</a>
                   </li>
+                  <li> <a class="dropdown-item" href="{% url 'users:mentor_list' %}">Mentors</a></li>
+                  <li> <a class="dropdown-item" href="{% url 'users:message_list' %}">Message</a></li>
+                  <li> <a class="dropdown-item" href="{% url 'groups:group_list' %}">Group</a></li>
                 </ul>
               </li>
               <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='events' %}">Events</a>

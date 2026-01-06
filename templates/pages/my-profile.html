@@ -57,8 +57,9 @@
         <!-- Info -->
         <div>
           <div class="nav nav-divider">
-            <h6 class="nav-item card-title mb-0"> <a href="#!"> {{ post.author.get_full_name|default:post.author.email
-                }} </a></h6>
+            <h6 class="nav-item card-title mb-0"> <a href="#!">
+                {{ post.author.get_full_name|default:post.author.email }}
+            </a></h6>
             <span class="nav-item small"> {{ post.created_at|timesince }} ago</span>
           </div>
           <p class="mb-0 small">{{ post.author.profile.job_title|default:"" }}</p>
@@ -91,7 +92,73 @@
           </button>
         </form>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#!"> <i class="bi bi-chat-fill pe-1"></i>Comments ({{ post.comments.count }})</a>
+      </li>
     </ul>
+   <!-- Feed react END -->
+
+    <!-- Add comment -->
+    <div class="d-flex mb-3">
+      <!-- Avatar -->
+      <div class="avatar avatar-xs me-2">
+        <a href="#!"> <img class="avatar-img rounded-circle"
+            src="{% if request.user.profile.profile_picture %}{{ request.user.profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
+            alt="">
+        </a>
+      </div>
+      <!-- Comment box  -->
+      <form class="position-relative w-100" action="{% url 'posts:post_comment' post.pk %}" method="POST">
+        {% csrf_token %}
+        <textarea class="form-control pe-4 bg-light" name="content" rows="1" placeholder="Add a comment..."></textarea>
+        <!-- Button -->
+        <button class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0" type="submit">
+            <i class="bi bi-send-fill text-primary"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Comment wrap START -->
+    <ul class="comment-wrap list-unstyled">
+      {% for comment in post.comments.all %}
+      <!-- Comment item START -->
+      <li class="comment-item">
+        <div class="d-flex position-relative">
+          <div class="comment-line-inner"></div>
+          <!-- Avatar -->
+          <div class="avatar avatar-xs">
+            <a href="#!"><img class="avatar-img rounded-circle"
+                src="{% if comment.author.profile.profile_picture %}{{ comment.author.profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
+                alt=""></a>
+          </div>
+          <div class="ms-2">
+            <!-- Comment by -->
+            <div class="bg-light rounded-start-top-0 p-3 rounded">
+              <div class="d-flex justify-content-center">
+                <div class="me-2">
+                  <h6 class="mb-1"> <a href="#!"> {{ comment.author.get_full_name|default:comment.author.email }} </a></h6>
+                  <p class="small mb-0">{{ comment.content }}</p>
+                </div>
+                <small>{{ comment.created_at|timesince }} ago</small>
+              </div>
+            </div>
+            <!-- Comment react -->
+            <ul class="nav nav-divider py-2 small">
+              <li class="nav-item">
+                <a class="nav-link" href="#!"> Like</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#!"> Reply</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <!-- Comment item END -->
+      {% endfor %}
+    </ul>
+    <!-- Comment wrap END -->
+
   </div>
 </div>
 {% empty %}

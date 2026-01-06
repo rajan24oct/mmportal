@@ -269,8 +269,9 @@
                                                             alt=""></a>
                                                 </div>
                                                 <h6 class="card-title mb-1 mt-3"> <a
-                                                        href="{% url 'users:profile_about' pk=profile.pk %}"> {{
-                                                        profile.get_full_name|default:profile.email }} </a></h6>
+                                                        href="{% url 'users:profile_about' pk=profile.pk %}">
+                                                    {{ profile.get_full_name|default:profile.user.email }} </a>
+                                                </h6>
                                             </div>
                                             <!-- Card footer -->
                                             <div class="card-footer p-2 border-0">

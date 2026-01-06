@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
-from .models import Post, Like
+from .models import Post, Like, Comment
 
 class PostCreateView(LoginRequiredMixin, View):
     def post(self, request):
@@ -18,7 +18,7 @@ class PostCreateView(LoginRequiredMixin, View):
             )
         
         # Redirect back to the page they came from
-        return redirect(request.META.get('HTTP_REFERER', 'users:profile_about', kwargs={'pk': request.user.profile.pk}))
+        return redirect(request.META.get('HTTP_REFERER') or 'users:profile_about', pk=request.user.profile.pk)
 
 class LikePostView(LoginRequiredMixin, View):
     def post(self, request, pk):
@@ -26,4 +26,12 @@ class LikePostView(LoginRequiredMixin, View):
         like, created = Like.objects.get_or_create(post=post, user=request.user)
         if not created:
             like.delete()
-        return redirect(request.META.get('HTTP_REFERER', 'users:profile_about', kwargs={'pk': request.user.profile.pk}))
+        return redirect(request.META.get('HTTP_REFERER') or 'users:profile_about', pk=request.user.profile.pk)
+
+class PostCommentView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        content = request.POST.get('content')
+        if content:
+            Comment.objects.create(post=post, author=request.user, content=content)
+        return redirect(request.META.get('HTTP_REFERER') or 'users:profile_about', pk=request.user.profile.pk)
