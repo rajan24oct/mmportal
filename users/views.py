@@ -113,9 +113,14 @@ class MessageDetailView(LoginRequiredMixin, View):
         # Mark as read
         messages.filter(recipient=request.user, is_read=False).update(is_read=True)
         
+        partners = User.objects.filter(
+            Q(sent_messages__recipient=request.user) | Q(received_messages__sender=request.user)
+        ).distinct()
+
         return render(request, 'pages/messaging-detail.html', {
             'partner': partner,
-            'messages': messages
+            'messages': messages,
+            'partners': partners,
         })
 
     def post(self, request, partner_pk):
@@ -163,3 +168,55 @@ class RejectConnectionRequestView(LoginRequiredMixin, View):
         connection_request.status = 'rejected'
         connection_request.save()
         return redirect('users:profile_about', pk=request.user.profile.pk)
+
+
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from .forms import UserSettingsForm
+
+class SettingsView(LoginRequiredMixin, View):
+    template_name = 'pages/settings.html'
+
+    def get(self, request):
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        settings_form = UserSettingsForm(instance=profile)
+        password_form = PasswordChangeForm(user=request.user)
+        
+        context = {
+            'settings_form': settings_form,
+            'password_form': password_form,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        
+        if 'account_settings' in request.POST:
+            settings_form = UserSettingsForm(request.POST, request.FILES, instance=profile)
+            password_form = PasswordChangeForm(user=request.user)
+            
+            if settings_form.is_valid():
+                settings_form.save()
+                messages.success(request, 'Account settings updated successfully.')
+                return redirect('users:settings')
+                
+        elif 'password_change' in request.POST:
+            settings_form = UserSettingsForm(instance=profile)
+            password_form = PasswordChangeForm(user=request.user, data=request.POST)
+            
+            if password_form.is_valid():
+                password_form.save()
+                update_session_auth_hash(request, password_form.user)
+                messages.success(request, 'Password updated successfully.')
+                return redirect('users:settings')
+        else:
+             # Default fallback if something weird happens
+            settings_form = UserSettingsForm(instance=profile)
+            password_form = PasswordChangeForm(user=request.user)
+
+        context = {
+            'settings_form': settings_form,
+            'password_form': password_form,
+        }
+        return render(request, self.template_name, context)

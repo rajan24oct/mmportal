@@ -95,22 +95,23 @@
                 <a class="nav-link" href="{% url 'pages:dynamic_pages' template_name='my-profile-about' %}">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'pages:dynamic_pages' template_name='settings' %}">Settings</a>
+                <a class="nav-link" href="{% url 'users:settings' %}">Settings</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" target="_blank" href="#">Support </a>
-              </li>              
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'pages:dynamic_pages' template_name='help' %}">Help</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'pages:dynamic_pages' template_name='privacy-and-terms' %}">Privacy & terms</a>
+                <a class="nav-link" href="{% url 'pages:dynamic_pages' template_name='privacy-and-terms' %}">Privacy &
+                  terms</a>
               </li>
             </ul>
             <!-- Helper link END -->
             <!-- Copyright -->
-            <p class="small text-center mt-1">©2024 <a class="text-reset" target="_blank"
-                href="https://stackbros.in/"> StackBros </a></p>
+            <p class="small text-center mt-1">©2024 <a class="text-reset" target="_blank" href="https://stackbros.in/">
+                StackBros </a></p>
 
           </div>
         </nav>
@@ -137,62 +138,66 @@
               <!-- Card body START -->
               <div class="card-body">
                 <!-- Form settings START -->
-                <form class="row g-3">
+                <form class="row g-3" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <input type="hidden" name="account_settings" value="true">
+
+                  {% if settings_form.non_field_errors %}
+                  <div class="alert alert-danger">
+                    {{ settings_form.non_field_errors }}
+                  </div>
+                  {% endif %}
+
                   <!-- First name -->
                   <div class="col-sm-6 col-lg-4">
                     <label class="form-label">First name</label>
-                    <input type="text" class="form-control" placeholder="" value="Sam">
+                    <input type="text" name="first_name" class="form-control"
+                      value="{{ settings_form.first_name.value|default:'' }}">
                   </div>
                   <!-- Last name -->
                   <div class="col-sm-6 col-lg-4">
                     <label class="form-label">Last name</label>
-                    <input type="text" class="form-control" placeholder="" value="Lanson">
+                    <input type="text" name="last_name" class="form-control"
+                      value="{{ settings_form.last_name.value|default:'' }}">
                   </div>
                   <!-- Additional name -->
                   <div class="col-sm-6 col-lg-4">
-                    <label class="form-label">Additional name</label>
-                    <input type="text" class="form-control" placeholder="">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control"
+                      value="{{ settings_form.username.value|default:'' }}">
                   </div>
                   <!-- User name -->
                   <div class="col-sm-6">
-                    <label class="form-label">User name</label>
-                    <input type="text" class="form-control" placeholder="" value="@samlanson">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control"
+                      value="{{ settings_form.email.value|default:'' }}">
                   </div>
                   <!-- Birthday -->
                   <div class="col-lg-6">
                     <label class="form-label">Birthday </label>
-                    <input type="text" class="form-control flatpickr" value="12/12/1990">
+                    <input type="date" name="dob" class="form-control flatpickr"
+                      value="{{ settings_form.dob.value|date:'Y-m-d'|default:'' }}">
                   </div>
-                  <!-- Allow checkbox -->
-                  <div class="col-12">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="allowChecked" checked>
-                      <label class="form-check-label" for="allowChecked">
-                        Allow anyone to add you to their team
-                      </label>
-                    </div>
+
+                  <!-- Job Title -->
+                  <div class="col-sm-6 col-lg-4">
+                    <label class="form-label">Job Title</label>
+                    <input type="text" name="job_title" class="form-control"
+                      value="{{ settings_form.job_title.value|default:'' }}">
                   </div>
-                  <!-- Phone number -->
-                  <div class="col-sm-6">
-                    <label class="form-label">Phone number</label>
-                    <input type="text" class="form-control" placeholder="" value="(678) 324-1251">
-                    <!-- Add new number -->
-                    <a class="btn btn-sm btn-dashed rounded mt-2" href="#!"> <i
-                        class="bi bi-plus-circle-dotted me-1"></i>Add new phone number</a>
+
+                  <!-- Location -->
+                  <div class="col-sm-6 col-lg-4">
+                    <label class="form-label">Location</label>
+                    <input type="text" name="location" class="form-control"
+                      value="{{ settings_form.location.value|default:'' }}">
                   </div>
-                  <!-- Phone number -->
-                  <div class="col-sm-6">
-                    <label class="form-label">Email</label>
-                    <input type="text" class="form-control" placeholder="" value="abc@example.com">
-                    <!-- Add new email -->
-                    <a class="btn btn-sm btn-dashed rounded mt-2" href="#!"> <i
-                        class="bi bi-plus-circle-dotted me-1"></i>Add new email address</a>
-                  </div>
+
                   <!-- Page information -->
                   <div class="col-12">
                     <label class="form-label">Overview</label>
-                    <textarea class="form-control" rows="4"
-                      placeholder="Description (Required)">Interested has all Devonshire difficulty gay assistance joy. Handsome met debating sir dwelling age material. As style lived he worse dried. Offered related so visitors we private removed. Moderate do subjects to distance.</textarea>
+                    <textarea class="form-control" name="about" rows="4"
+                      placeholder="Description">{{ settings_form.about.value|default:'' }}</textarea>
                     <small>Character limit: 300</small>
                   </div>
                   <!-- Button  -->
@@ -216,31 +221,52 @@
               <!-- Title START -->
               <div class="card-body">
                 <!-- Settings START -->
-                <form class="row g-3">
+                <form class="row g-3" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="password_change" value="true">
+
+                  {% if password_form.non_field_errors %}
+                  <div class="alert alert-danger">
+                    {{ password_form.non_field_errors }}
+                  </div>
+                  {% endif %}
+
                   <!-- Current password -->
                   <div class="col-12">
                     <label class="form-label">Current password</label>
-                    <input type="text" class="form-control" placeholder="">
+                    <input type="password" name="old_password" class="form-control" autocomplete="current-password"
+                      required id="id_old_password">
+                    {% if password_form.old_password.errors %}
+                    <div class="text-danger small">{{ password_form.old_password.errors.0 }}</div>
+                    {% endif %}
                   </div>
                   <!-- New password -->
                   <div class="col-12">
                     <label class="form-label">New password</label>
                     <!-- Input group -->
                     <div class="input-group">
-                      <input class="form-control fakepassword" type="password" id="psw-input"
-                        placeholder="Enter new password">
+                      <input class="form-control fakepassword" type="password" name="new_password1" id="psw-input"
+                        autocomplete="new-password" required placeholder="Enter new password">
                       <span class="input-group-text p-0">
                         <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                       </span>
                     </div>
+                    {% if password_form.new_password1.errors %}
+                    <div class="text-danger small">{{ password_form.new_password1.errors.0 }}</div>
+                    {% endif %}
                     <!-- Pswmeter -->
                     <div id="pswmeter" class="mt-2"></div>
                     <div id="pswmeter-message" class="rounded mt-1"></div>
+                    <div class="text-muted small">{{ password_form.new_password1.help_text|safe }}</div>
                   </div>
                   <!-- Confirm password -->
                   <div class="col-12">
                     <label class="form-label">Confirm password</label>
-                    <input type="text" class="form-control" placeholder="">
+                    <input type="password" name="new_password2" class="form-control" autocomplete="new-password"
+                      required>
+                    {% if password_form.new_password2.errors %}
+                    <div class="text-danger small">{{ password_form.new_password2.errors.0 }}</div>
+                    {% endif %}
                   </div>
                   <!-- Button  -->
                   <div class="col-12 text-end">

@@ -8,7 +8,8 @@ from .views import (
     RejectConnectionRequestView,
     MessageListView,
     MessageDetailView,
-    profile_redirect
+    profile_redirect,
+    SettingsView
 )
 
 app_name = 'users'
@@ -23,4 +24,5 @@ urlpatterns = [
     path('connect/reject/<int:pk>/', RejectConnectionRequestView.as_view(), name='reject_connection_request'),
     path('messages/', MessageListView.as_view(), name='message_list'),
     path('messages/<int:partner_pk>/', MessageDetailView.as_view(), name='message_detail'),
+    path('settings/', SettingsView.as_view(), name='settings'),
 ]
