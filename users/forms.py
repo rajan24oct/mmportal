@@ -9,13 +9,16 @@ class UserSignupForm(SignupForm):
         # Try to handle email locking
         email = self.initial.get('email')
         if email:
-            self.fields['email'].widget.attrs['readonly'] = True
+            self.fields['email'].widget.attrs['readonly'] = 'readonly'
+            self.fields['email'].disabled = True
             self.fields['email'].help_text = "Your email is locked to the invitation."
 
     def save(self, request):
-        # allauth will handle username generation because 
-        # ACCOUNT_AUTHENTICATION_METHOD="email" and ACCOUNT_USERNAME_REQUIRED=False
+        # allauth will handle username generation initially
         user = super(UserSignupForm, self).save(request)
+        # Explicitly set username to email as requested
+        user.username = user.email
+        user.save()
         return user
 
 class UserProfileForm(forms.ModelForm):

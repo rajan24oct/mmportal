@@ -1,7 +1,7 @@
 from invitations.utils import get_invitation_model
 Invitation = get_invitation_model()
 
-email_address = "Example@example.com"
+email_address = "mentor1@example.com"
 invitation = (Invitation.objects
     .filter(email__iexact=email_address)
     .order_by('created')

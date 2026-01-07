@@ -12,16 +12,15 @@ Tasks:
         - [x] Create ConnectionRequest model
         - [x] Create view to send connection requests
         - [x] Create view to list/accept/reject connection requests
-	- [ ] Create message functionality between two users
-	- [ ] CheckUser Profile /my-profile-about/
-		- [ ] Create a about field in UserProfile
-			- [ ] On profile edit, it will be updated
-			- [ ] Fetch about from backend in overview section
-		- [ ] Fetch connection from backend in connection section
-			- [ ] Connection should message each other
+	- [x] Create message functionality between two users
+	- [x] CheckUser Profile /my-profile-about/
+		- [x] Create a about field in UserProfile
+			- [x] On profile edit, it will be updated
+			- [x] Fetch about from backend in overview section
+		- [x] Fetch connection from backend in connection section
+			- [x] Connection should message each other
 			- [ ] Connection should be removed as per given button
 			- [ ] Implement functionality for "Load more Connection"
-
 		- [ ] Fetch post from backend in post section of respective user profile
 		- [ ] Fetch media from backend in media section of respective user profile
 
