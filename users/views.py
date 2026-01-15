@@ -5,9 +5,13 @@ from django.views.generic import UpdateView, DetailView, ListView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 from .models import UserProfile, ConnectionRequest, Message
-from .forms import UserProfileForm
+from .forms import UserProfileForm, UserSettingsForm
 from posts.models import Post
+
 
 User = get_user_model()
 
@@ -59,9 +63,11 @@ class ProfileView(LoginRequiredMixin, DetailView):
         
         connections = []
         for req in sent_requests:
-            connections.append(req.recipient)
+            if hasattr(req.recipient, 'profile'):
+                connections.append(req.recipient)
         for req in received_requests:
-            connections.append(req.sender)
+            if hasattr(req.sender, 'profile'):
+                connections.append(req.sender)
         
         context['connections'] = connections[:10] # Initial load
         context['connection_count'] = len(connections)
@@ -78,6 +84,12 @@ class ProfileView(LoginRequiredMixin, DetailView):
                 (Q(sender=self.request.user) & Q(recipient=user)) |
                 (Q(sender=user) & Q(recipient=self.request.user))
             ).first()
+        else:
+            # If viewing own profile, show pending requests
+            context['pending_requests'] = ConnectionRequest.objects.filter(
+                recipient=user, 
+                status='pending'
+            ).select_related('sender__profile')
             
         return context
 
@@ -138,9 +150,19 @@ class MentorListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        queryset = UserProfile.objects.filter(user_type='mentor')
+        queryset = UserProfile.objects.filter(user_type='mentor').exclude(user=self.request.user)
+
+        # Filter out accepted connections
+        user = self.request.user
+        sent_requests = ConnectionRequest.objects.filter(sender=user, status='accepted').values_list('recipient', flat=True)
+        received_requests = ConnectionRequest.objects.filter(recipient=user, status='accepted').values_list('sender', flat=True)
+        connected_users = list(sent_requests) + list(received_requests)
+        
+        queryset = queryset.exclude(user__in=connected_users)
+
         if query:
             queryset = queryset.filter(
+                Q(user__email__icontains=query) |
                 Q(user__first_name__icontains=query) |
                 Q(user__last_name__icontains=query) |
                 Q(job_title__icontains=query) |
@@ -169,11 +191,6 @@ class RejectConnectionRequestView(LoginRequiredMixin, View):
         connection_request.save()
         return redirect('users:profile_about', pk=request.user.profile.pk)
 
-
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
-from django.contrib import messages
-from .forms import UserSettingsForm
 
 class SettingsView(LoginRequiredMixin, View):
     template_name = 'pages/settings.html'

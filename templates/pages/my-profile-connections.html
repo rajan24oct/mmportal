@@ -15,22 +15,62 @@
   <!-- Card header END -->
   <!-- Card body START -->
   <div class="card-body">
-    {% for conn in connections %}
-    <!-- Connections Item -->
+    {% if pending_requests %}
+    <!-- Pending Requests Section -->
+    <h6 class="mb-3">Connection Requests</h6>
+    {% for req in pending_requests %}
     <div class="d-md-flex align-items-center mb-4">
       <!-- Avatar -->
       <div class="avatar me-3 mb-3 mb-md-0">
-        <a href="{% url 'users:profile_about' pk=profile.pk %}"> <img class="avatar-img rounded-circle"
-            src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
+        <a href="{% url 'users:profile_about' pk=req.sender.profile.pk %}">
+          <img class="avatar-img rounded-circle"
+            src="{% if req.sender.profile.profile_picture %}{{ req.sender.profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
             alt="">
         </a>
       </div>
       <!-- Info -->
       <div class="w-100">
         <div class="d-sm-flex align-items-start">
-          <h6 class="mb-0"><a href="{% url 'users:profile_about' pk=profile.pk %}">
-              {{ user.get_full_name|default:user.email }} </a></h6>
-          <p class="small ms-sm-2 mb-0">{{ user.job_title|default:"" }}</p>
+          <h6 class="mb-0"><a href="{% url 'users:profile_about' pk=req.sender.profile.pk %}">
+              {{ req.sender.get_full_name|default:req.sender.email }}
+            </a></h6>
+          <p class="small ms-sm-2 mb-0">{{ req.sender.profile.job_title|default:"" }}</p>
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div class="ms-md-auto d-flex gap-2">
+        <form action="{% url 'users:accept_connection_request' req.pk %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary-soft btn-sm mb-0"> Accept </button>
+        </form>
+        <form action="{% url 'users:reject_connection_request' req.pk %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger-soft btn-sm mb-0"> Reject </button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+    <hr class="my-4">
+    <h6 class="mb-3">My Connections</h6>
+    {% endif %}
+
+    {% for conn in connections %}
+    <!-- Connections Item -->
+    <div class="d-md-flex align-items-center mb-4">
+      <!-- Avatar -->
+      <div class="avatar me-3 mb-3 mb-md-0">
+        <a href="{% url 'users:profile_about' pk=conn.profile.pk %}"> <img class="avatar-img rounded-circle"
+            src="{% if conn.profile.profile_picture %}{{ conn.profile.profile_picture.url }}{% else %}{% static 'images/avatar/placeholder.jpg' %}{% endif %}"
+            alt="">
+        </a>
+      </div>
+      <!-- Info -->
+      <div class="w-100">
+        <div class="d-sm-flex align-items-start">
+          <h6 class="mb-0"><a href="{% url 'users:profile_about' pk=conn.profile.pk %}">
+              {{ conn.get_full_name|default:conn.email }}
+            </a></h6>
+          <p class="small ms-sm-2 mb-0">{{ conn.profile.job_title|default:"" }}</p>
         </div>
       </div>
       <!-- Button -->
@@ -38,7 +78,7 @@
         {% if request.user == profile.user %}
         <button class="btn btn-danger-soft btn-sm mb-0 me-2"> Remove </button>
         {% endif %}
-        <a href="{% url 'users:message_detail' partner_pk=user.pk %}" class="btn btn-primary-soft btn-sm mb-0">
+        <a href="{% url 'users:message_detail' partner_pk=conn.pk %}" class="btn btn-primary-soft btn-sm mb-0">
           Message </a>
       </div>
     </div>
