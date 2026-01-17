@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load allauth i18n %}
+{% load account socialaccount %}
+{% load static %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+{% block content %}
+
+<main>
+
+    <!-- Container START -->
+    <div class="container">
+        <div class="row justify-content-center align-items-center vh-100 py-5">
+            <!-- Main content START -->
+            <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
+                <!-- Sign in START -->
+                <div class="card card-body text-center p-4 p-sm-5">
+                    <!-- Title -->
+                    <h1 class="mb-2">{% trans "Sign In" %}</h1>
+                    <p class="mb-0">{% trans "Don't have an account?" %}<a href="{% url 'account_signup' %}">
+                        {% trans "Click here to sign up" %}</a></p>
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger mt-3">
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <strong>{{ error|escape }}</strong><br>
+                        {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <strong>{{ error|escape }}</strong><br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Form START -->
+                    <form class="login mt-sm-4" method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        <!-- Email -->
+                        <div class="mb-3 input-group-lg">
+                            <input type="email" name="{{ form.login.name }}" class="form-control"
+                                placeholder="{% trans 'Enter email' %}" id="{{ form.login.id_for_label }}"
+                                value="{{ form.login.value|default:'' }}" required>
+                        </div>
+                        <!-- New password -->
+                        <div class="mb-3 position-relative">
+                            <!-- Password -->
+                            <div class="input-group input-group-lg">
+                                <input class="form-control fakepassword" type="password" name="{{ form.password.name }}"
+                                    id="{{ form.password.id_for_label }}" placeholder="{% trans 'Enter password' %}"
+                                    required>
+                                <span class="input-group-text p-0">
+                                    <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Remember me -->
+                        <div class="mb-3 d-sm-flex justify-content-between">
+                            <div>
+                                <input type="checkbox" class="form-check-input" name="{{ form.remember.name }}"
+                                    id="{{ form.remember.id_for_label }}"
+                                       {% if form.remember.value %}checked{% endif %}>
+                                <label class="form-check-label" for="{{ form.remember.id_for_label }}">
+                                    {% trans "Remember me?" %}</label>
+                            </div>
+                            <a href="{% url 'account_reset_password' %}">{% trans "Forgot password?" %}</a>
+                        </div>
+
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+
+                        <!-- Button -->
+                        <div class="d-grid"><button type="submit" class="btn btn-lg btn-primary">
+                            {% trans "Sign In" %}</button>
+                        </div>
+                        <!-- Copyright -->
+                        <p class="mb-0 mt-3">©2024 <a target="_blank" href="https://stackbros.in/">StackBros.</a>
+                            All rights reserved</p>
+                    </form>
+                    <!-- Form END -->
+                </div>
+                <!-- Sign in START -->
+            </div>
+        </div> <!-- Row END -->
+    </div>
+    <!-- Container END -->
+
+</main>
+
+{% endblock content %}
+
+{% block extra_javascript %}
+{% endblock extra_javascript %}
