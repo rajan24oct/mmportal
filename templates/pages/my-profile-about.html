@@ -1,5 +1,5 @@
 {% extends "profile-layout.html" %}
-
+{% load allauth i18n %}
 {% load static %}
 
 {% block extra_css %}
@@ -21,6 +21,7 @@
     <div class="rounded border px-3 py-2 mb-3">
       <div class="d-flex align-items-center justify-content-between">
         <h6>Overview</h6>
+        {% if request.user == profile.user %}
         <div class="dropdown ms-auto">
           <!-- Card share action menu -->
           <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction" data-bs-toggle="dropdown"
@@ -29,14 +30,13 @@
           </a>
           <!-- Card share action dropdown menu -->
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction">
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
+            <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                  class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
           </ul>
         </div>
+        {% endif %}
       </div>
-      <p>He moonlights difficult engrossed it, sportsmen. Interested has all Devonshire difficulty gay
-        assistance joy. Handsome met debating sir dwelling age material. As style lived he worse dried.
-        Offered related so visitors we private removed. Moderate do subjects to distance. </p>
+      <p>{{ profile.about|default:"No information provided yet." }}</p>
     </div>
     <div class="row g-4">
       <div class="col-sm-6">
@@ -44,8 +44,9 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> October 20, 1990 </strong>
+            <i class="bi bi-calendar-date fa-fw me-2"></i> Born: <strong> {{ profile.dob|default:"N/A" }} </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction2" data-bs-toggle="dropdown"
@@ -54,11 +55,12 @@
             </a>
             <!-- Card share action dropdown menu -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction2">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
               </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
             </ul>
           </div>
+          {% endif %}
         </div>
         <!-- Birthday END -->
       </div>
@@ -67,8 +69,10 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-heart fa-fw me-2"></i> Status: <strong> Single </strong>
+            <i class="bi bi-heart fa-fw me-2"></i> Status:
+            <strong> {{ profile.get_marital_status_display|default:"N/A" }} </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction3" data-bs-toggle="dropdown"
@@ -77,11 +81,12 @@
             </a>
             <!-- Card share action dropdown menu -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction3">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
               </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
             </ul>
           </div>
+          {% endif %}
         </div>
         <!-- Status END -->
       </div>
@@ -90,8 +95,9 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-briefcase fa-fw me-2"></i> <strong> Lead Developer </strong>
+            <i class="bi bi-briefcase fa-fw me-2"></i> <strong> {{ profile.job_title|default:"N/A" }} </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction4" data-bs-toggle="dropdown"
@@ -100,11 +106,12 @@
             </a>
             <!-- Card share action dropdown menu -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction4">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
               </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
             </ul>
           </div>
+          {% endif %}
         </div>
         <!-- Designation END -->
       </div>
@@ -113,8 +120,10 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-geo-alt fa-fw me-2"></i> Lives in: <strong> New Hampshire </strong>
+            <i class="bi bi-geo-alt fa-fw me-2"></i> Lives in: <strong> {{ profile.location|default:"N/A" }}
+            </strong>
           </p>
+          {% if request.user == profile.user %}
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
             <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction5" data-bs-toggle="dropdown"
@@ -123,11 +132,12 @@
             </a>
             <!-- Card share action dropdown menu -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction5">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
               </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
             </ul>
           </div>
+          {% endif %}
         </div>
         <!-- Lives END -->
       </div>
@@ -136,7 +146,7 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-geo-alt fa-fw me-2"></i> Joined on: <strong> Nov 26, 2019 </strong>
+            <i class="bi bi-geo-alt fa-fw me-2"></i> Joined on: <strong> {{ user.date_joined|date:"M d, Y" }} </strong>
           </p>
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
@@ -144,12 +154,6 @@
               aria-expanded="false">
               <i class="bi bi-three-dots"></i>
             </a>
-            <!-- Card share action dropdown menu -->
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction6">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
-              </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-            </ul>
           </div>
         </div>
         <!-- Joined on END -->
@@ -159,7 +163,7 @@
         <div class="d-flex align-items-center rounded border px-3 py-2">
           <!-- Date -->
           <p class="mb-0">
-            <i class="bi bi-envelope fa-fw me-2"></i> Email: <strong> example@xyz.com </strong>
+            <i class="bi bi-envelope fa-fw me-2"></i> Email: <strong> {{ user.email }} </strong>
           </p>
           <div class="dropdown ms-auto">
             <!-- Card share action menu -->
@@ -167,27 +171,53 @@
               aria-expanded="false">
               <i class="bi bi-three-dots"></i>
             </a>
-            <!-- Card share action dropdown menu -->
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction7">
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
-              </li>
-              <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-            </ul>
           </div>
         </div>
         <!-- Joined on END -->
       </div>
-      <div class="col-sm-6 position-relative">
+      <div class="col-sm-6">
         <!-- Workplace on START -->
-        <a class="btn btn-dashed rounded w-100" href="#!"> <i class="bi bi-plus-circle-dotted me-1"></i>Add a
-          workplace</a>
-        <!-- Workplace on END -->
+        <div class="d-flex align-items-center rounded border px-3 py-2">
+          <p class="mb-0">
+            <i class="bi bi-building fa-fw me-2"></i> Workplace: <strong> {{ profile.work_place|default:"N/A" }}
+            </strong>
+          </p>
+          {% if request.user == profile.user %}
+          <div class="dropdown ms-auto">
+            <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction8" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-three-dots"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction8">
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              </li>
+            </ul>
+          </div>
+          {% endif %}
+        </div>
       </div>
-      <div class="col-sm-6 position-relative">
+      <div class="col-sm-6">
         <!-- Education on START -->
-        <a class="btn btn-dashed rounded w-100" href="#!"> <i class="bi bi-plus-circle-dotted me-1"></i>Add a
-          education</a>
-        <!-- Education on END -->
+        <div class="d-flex align-items-center rounded border px-3 py-2">
+          <p class="mb-0">
+            <i class="bi bi-book fa-fw me-2"></i> Education:
+            <strong> {{ profile.education_qualification|default:"N/A" }} </strong>
+          </p>
+          {% if request.user == profile.user %}
+          <div class="dropdown ms-auto">
+            <a class="nav nav-link text-secondary mb-0" href="#" id="aboutAction9" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-three-dots"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="aboutAction9">
+              <li><a class="dropdown-item" href="{% url 'users:profile_about_edit' %}"> <i
+                    class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a>
+              </li>
+            </ul>
+          </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
@@ -210,7 +240,7 @@
         <!-- Interests item START -->
         <div class="d-flex align-items-center position-relative">
           <div class="avatar">
-            <img class="avatar-img" src="{% static '/images/logo/04.svg' %}" alt="">
+            <img class="avatar-img" src="{% static 'images/logo/04.svg' %}" alt="">
           </div>
           <div class="ms-2">
             <h6 class="mb-0"> <a class="stretched-link" href="#"> Oracle </a></h6>
@@ -223,7 +253,7 @@
         <!-- Interests item START -->
         <div class="d-flex align-items-center position-relative">
           <div class="avatar">
-            <img class="avatar-img" src="{% static '/images/logo/13.svg' %}" alt="">
+            <img class="avatar-img" src="{% static 'images/logo/13.svg' %}" alt="">
           </div>
           <div class="ms-2">
             <h6 class="mb-0"> <a class="stretched-link" href="#"> Apple </a></h6>
@@ -236,7 +266,7 @@
         <!-- Interests item START -->
         <div class="d-flex align-items-center position-relative">
           <div class="avatar">
-            <img class="avatar-img rounded-circle" src="{% static '/images/avatar/placeholder.jpg' %}" alt="">
+            <img class="avatar-img rounded-circle" src="{% static 'images/avatar/placeholder.jpg' %}" alt="">
           </div>
           <div class="ms-2">
             <h6 class="mb-0"> <a class="stretched-link" href="#"> Elon musk </a></h6>
@@ -249,7 +279,7 @@
         <!-- Interests item START -->
         <div class="d-flex align-items-center position-relative">
           <div class="avatar">
-            <img class="avatar-img" src="{% static '/images/events/04.jpg' %}" alt="">
+            <img class="avatar-img" src="{% static 'images/events/04.jpg' %}" alt="">
           </div>
           <div class="ms-2">
             <h6 class="mb-0"> <a class="stretched-link" href="#"> The X Factor </a></h6>
@@ -262,7 +292,7 @@
         <!-- Interests item START -->
         <div class="d-flex align-items-center position-relative">
           <div class="avatar">
-            <img class="avatar-img rounded-circle" src="{% static '/images/logo/12.svg' %}" alt="">
+            <img class="avatar-img rounded-circle" src="{% static 'images/logo/12.svg' %}" alt="">
           </div>
           <div class="ms-2">
             <h6 class="mb-0"> <a class="stretched-link" href="#"> Getbootstrap </a></h6>

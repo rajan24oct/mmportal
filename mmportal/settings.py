@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,6 +29,10 @@ SECRET_KEY = 'django-insecure-^-1z94z!_3b2an1w0aj@a)54gpm)@lq$=4i=@8t4$m8%zz33!(
 DEBUG = True
 
 ALLOWED_HOSTS = []
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 
 
 # Application definition
@@ -49,11 +54,15 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.mfa",
     "allauth.socialaccount",
-    "fontawesomefree"
+    "fontawesomefree",
+    "debug_toolbar",
+    "invitations",
 ]
 
 LOCAL_APPS = [
-
+    "users",
+    "groups",
+    "posts",
     # Your stuff: custom apps go here
 ]
 
@@ -64,6 +73,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -128,6 +138,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTHENTICATION_BACKENDS = [
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
@@ -138,16 +156,16 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 STATIC_ROOT = location('public/static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = location('public/media')
-
-EMAIL_HOST = 'smtp.postmarkapp.com'
-EMAIL_PORT = '25'
-EMAIL_HOST_USER = '4934d6c9-26c1-4dcf-8b81-e811c1f401ed'
-EMAIL_HOST_PASSWORD = '4934d6c9-4dcf-8b81-e811c1f401ed'
-EMAIL_USE_TLS = True
-
-ANYMAIL = {
-    "POSTMARK_SERVER_TOKEN": "4934d6c9-26c1-4dcf-8b81-e811c1f401ed",
-}
+#
+# EMAIL_HOST = 'smtp.postmarkapp.com'
+# EMAIL_PORT = '25'
+# EMAIL_HOST_USER = '4934d6c9-26c1-4dcf-8b81-e811c1f401ed'
+# EMAIL_HOST_PASSWORD = '4934d6c9-4dcf-8b81-e811c1f401ed'
+# EMAIL_USE_TLS = True
+#
+# ANYMAIL = {
+#     "POSTMARK_SERVER_TOKEN": "4934d6c9-26c1-4dcf-8b81-e811c1f401ed",
+# }
 
 INVITATION_ONLY = False
 try:
