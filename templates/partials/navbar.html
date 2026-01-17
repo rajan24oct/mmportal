@@ -39,151 +39,13 @@
         <!-- Nav Search END -->
 
         <ul class="navbar-nav navbar-nav-scroll ms-auto">
-          <!-- Nav item 1 Demos -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="homeMenu" data-bs-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">Demo</a>
-            <ul class="dropdown-menu" aria-labelledby="homeMenu">
-              <li> <a class="dropdown-item" href="/">Home default</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='index-classic' %}">Home
-                  classic</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='index-post' %}">Home
-                  post</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='index-video' %}">Home
-                  video</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='index-event' %}">Home
-                  event</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='landing' %}">Landing
-                  page</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='app-download' %}">App
-                  download</a></li>
-              <li class="dropdown-divider"></li>
-              <li>
-                <a class="dropdown-item" href="#" target="_blank">
-                  <i class="text-success fa-fw bi bi-cloud-download-fill me-2"></i>Buy Social!
-                </a>
-              </li>
-            </ul>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'groups:group_list' %}">Group</a>
           </li>
-          <!-- Nav item 2 Pages -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">Pages</a>
-            <ul class="dropdown-menu" aria-labelledby="pagesMenu">
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='albums' %}">Albums</a>
-              </li>
-              <li> <a class="dropdown-item"
-                  href="{% url 'pages:dynamic_pages' template_name='celebration' %}">Celebration</a></li>
-              <li> <a class="dropdown-item"
-                  href="{% url 'pages:dynamic_pages' template_name='messaging' %}">Messaging</a></li>
-              <!-- Dropdown submenu -->
-              <li class="dropdown-submenu dropend">
-                <a class="dropdown-item dropdown-toggle" href="#!">Profile</a>
-                <ul class="dropdown-menu" data-bs-popper="none">
-                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=posts">Feed</a> </li>
-                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=about">About</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'users:profile_redirect' %}?section=connections">Connections</a>
-                  </li>
-                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=media">Media</a> </li>
-                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=videos">Videos</a>
-                  </li>
-                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=events">Events</a>
-                  </li>
-                  <li> <a class="dropdown-item" href="{% url 'users:profile_redirect' %}?section=activity">Activity</a>
-                  </li>
-                  <li> <a class="dropdown-item" href="{% url 'users:mentor_list' %}">Mentors</a></li>
-                  <li> <a class="dropdown-item" href="{% url 'users:message_list' %}">Message</a></li>
-                  <li> <a class="dropdown-item" href="{% url 'groups:group_list' %}">Group</a></li>
-                </ul>
-              </li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='events' %}">Events</a>
-              </li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='events-2' %}">Events 2</a>
-              </li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='event-details' %}">Event
-                  details</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='event-details-2' %}">Event
-                  details 2</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='groups' %}">Groups</a>
-              </li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='group-details' %}">Group
-                  details</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='post-videos' %}">Post
-                  videos</a></li>
-              <li> <a class="dropdown-item"
-                  href="{% url 'pages:dynamic_pages' template_name='post-video-details' %}">Post video details</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='post-details' %}">Post
-                  details</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='video-details' %}">Video
-                  details</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='blog' %}">Blog</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='blog-details' %}">Blog
-                  details</a></li>
-
-              <!-- Dropdown submenu levels -->
-              <li class="dropdown-divider"></li>
-              <li class="dropdown-submenu dropend">
-                <a class="dropdown-item dropdown-toggle" href="#">Dropdown levels</a>
-                <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="none">
-                  <li> <a class="dropdown-item" href="#">Dropdown item</a> </li>
-                  <li> <a class="dropdown-item" href="#">Dropdown item</a> </li>
-                  <!-- dropdown submenu open left -->
-                  <li class="dropdown-submenu dropstart">
-                    <a class="dropdown-item dropdown-toggle" href="#">Dropdown (start)</a>
-                    <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="none">
-                      <li> <a class="dropdown-item" href="#">Dropdown item</a> </li>
-                      <li> <a class="dropdown-item" href="#">Dropdown item</a> </li>
-                    </ul>
-                  </li>
-                  <li> <a class="dropdown-item" href="#">Dropdown item</a> </li>
-                </ul>
-              </li>
-            </ul>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:mentor_list' %}">Mentors</a>
           </li>
 
-          <!-- Nav item 3 Post -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">Account </a>
-            <ul class="dropdown-menu" aria-labelledby="postMenu">
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='create-page' %}">Create a
-                  page</a></li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='settings' %}">Settings</a>
-              </li>
-              <li> <a class="dropdown-item"
-                  href="{% url 'pages:dynamic_pages' template_name='notifications' %}">Notifications</a> </li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='help' %}">Help center</a>
-              </li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='help-details' %}">Help
-                  details</a> </li>
-              <!-- dropdown submenu open left -->
-              <li class="dropdown-submenu dropstart">
-                <a class="dropdown-item dropdown-toggle" href="#">Authentication</a>
-                <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="none">
-                  <li> <a class="dropdown-item" href="{% url 'account_login' %}">Sign
-                      in</a> </li>
-                  <li> <a class="dropdown-item" href="{% url 'account_signup' %}">Sing
-                      up</a> </li>
-                  <li> <a class="dropdown-item" href="{% url 'account_reset_password' %}">Forgot password</a> </li>
-                  <li class="dropdown-divider"></li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='sign-in-advance' %}">Sign in advance</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='sign-up-advance' %}">Sing up advance</a> </li>
-                  <li> <a class="dropdown-item"
-                      href="{% url 'pages:dynamic_pages' template_name='forgot-password-advance' %}">Forgot password
-                      advance</a> </li>
-                </ul>
-              </li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='error-404' %}">Error
-                  404</a> </li>
-              <li> <a class="dropdown-item" href="{% url 'pages:dynamic_pages' template_name='offline' %}">Offline</a>
-              </li>
-              <li> <a class="dropdown-item"
-                  href="{% url 'pages:dynamic_pages' template_name='privacy-and-terms' %}">Privacy & terms</a> </li>
-            </ul>
-          </li>
 
           <!-- Nav item 4 Mega menu -->
           <li class="nav-item">
@@ -198,7 +60,7 @@
       <ul class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
         <li class="nav-item ms-2">
           <a class="nav-link bg-light icon-md btn btn-light p-0"
-            href="{% url 'pages:dynamic_pages' template_name='messaging' %}">
+            href="{% url 'users:message_list'  %}">
             <i class="bi bi-chat-left-text-fill fs-6"> </i>
           </a>
         </li>
