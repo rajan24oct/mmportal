@@ -185,7 +185,6 @@ yarn-error.log*
 
 # Editor directories and files
 .idea/
-.vscode/
 .xml
 *.suo
 *.ntvs*

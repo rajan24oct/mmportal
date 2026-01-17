@@ -1,5 +1,5 @@
 server {
-    server_name mindmillers.com;
+    # server_name mindmillers.com;
 
     real_ip_header X-Forwarded-For;
 
