@@ -22,3 +22,4 @@ fontawesomefree==6.6.0 # https://docs.fontawesome.com/web/use-with/python-djang
 #---vishnu
 python-dotenv
 django-invitations
+mysqlclient
